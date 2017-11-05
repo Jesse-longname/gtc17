@@ -10,6 +10,7 @@ export class FeedItemComponent implements OnInit {
   @Input() data: IFeedItem;
 
   constructor() {
+
   }
 
   ngOnInit() {
