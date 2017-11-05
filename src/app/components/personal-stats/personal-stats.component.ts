@@ -29,7 +29,6 @@ export class PersonalStatsComponent implements OnInit {
       let currTot = 0;
       let currCount = -1;
       let last = 0;
-      console.log(sorted);
       for (let i = 0; i < sorted.length; i++) {
         if (sorted[i].statGroup != currentGroup) {
           if (currentGroup == 'Total') {
@@ -56,7 +55,6 @@ export class PersonalStatsComponent implements OnInit {
         }
         this.statChanges.push(currentChange);
       }
-      console.log(this.statChanges);
     });
   }
 
