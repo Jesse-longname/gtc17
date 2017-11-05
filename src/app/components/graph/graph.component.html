@@ -15,16 +15,32 @@
   <!-- <a class="f6 link dim br2 ba ph3 pv2 mb2 dib dark-blue" href="#0">Button Text</a> -->
 
   <div *ngIf="section == 0" class="flex graph-div">
-    <div style="display: block" class="w-50">
-      <p align="center" class="black-50"> Pre-call</p>
-      <canvas baseChart [colors]="chartColors" [data]="oldRateChartData" [labels]="oldRateChartLabels" [chartType]="oldRateChartType"
-        (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-    </div>
-    <div style="display: block" class="w-50">
-      <p align="center" class="black-50"> Post-call</p>
-      <canvas baseChart [colors]="chartColors" [data]="newRateChartData" [labels]="newRateChartLabels" [chartType]="newRateChartType"
-        (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-    </div>
+      <div class = "w-50">
+          <p align="center" class="black-50"> Pre-call</p>
+          <div style="display: block">
+            <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+          </div>
+        </div>
+        <div class = "w-50">
+            <p align="center" class="black-50"> Post-call</p>
+            <div style="display: block">
+              <canvas baseChart
+                      [datasets]="barChartData"
+                      [labels]="barChartLabels"
+                      [options]="barChartOptions"
+                      [legend]="barChartLegend"
+                      [chartType]="barChartType"
+                      (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
   </div>
 
   <!-- LOCATION -->

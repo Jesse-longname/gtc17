@@ -70,13 +70,29 @@ export class GraphComponent implements OnInit {
       backgroundColor: ["#FFB6C1", "	#FFF68F", "#90EE90"]
     }];
 // Doughnut
-public oldRateChartLabels:string[] = ['0 - 3', '4 - 6', '7 - 10'];
-public oldRateChartData:number[] = [500, 250, 100];
-public oldRateChartType:string = 'doughnut';
+  public barChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels:string[] = ['1', '2', '3', '4', '5', '6', '7'];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = false;
 
-public newRateChartLabels:string[] = ['0 - 3', '4 - 6', '7 - 10'];
-public newRateChartData:number[] = [300, 200, 600];
-public newRateChartType:string = 'doughnut';
+  public barChartData:any[] = [
+    {data: [65, 59, 80, 81, 56, 55, 40]}
+  ];
+
+  public barChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
+  public barChartLabels:string[] = ['1', '2', '3', '4', '5', '6', '7'];
+  public barChartType:string = 'bar';
+  public barChartLegend:boolean = false;
+
+  public barChartData:any[] = [
+    {data: [65, 59, 80, 81, 56, 55, 40]}
+  ];
 
 //Doughnut Location
 public locationChartLabels:string[] = ['Ontario', 'Quebec', 'British Columbia', 'Manitoba','Saskatchewan','Nunavut'];
