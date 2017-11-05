@@ -18,6 +18,8 @@ export class GraphComponent implements OnInit {
     this.getAgeData();
     this.getLocationData();
     this.getGenderData();
+    this.getBeforeData();
+    this.getAfterData();
   }
 
   private getAgeData() {
@@ -65,6 +67,24 @@ export class GraphComponent implements OnInit {
     })
   }
 
+  private getBeforeData() {
+    this.db.collection('summary-stats').doc('before').valueChanges().subscribe((result) => {
+      this.oldBarChartData = [];
+      for (let stat in result) {
+        this.oldBarChartData.push(result[stat]);
+      }
+    });
+  }
+  
+  private getAfterData() {
+    this.db.collection('summary-stats').doc('after').valueChanges().subscribe((result) => {
+      this.newBarChartData = [];
+      for (let stat in result) {
+        this.newBarChartData.push(result[stat]);
+      }
+    });
+  }
+
   public chartColors: any[] = [
     {
       backgroundColor: ["#FFB6C1", "	#FFF68F", "#90EE90"]
@@ -74,24 +94,24 @@ export class GraphComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels:string[] = ['1', '2', '3', '4', '5', '6', '7'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = false;
+  public oldBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
+  public oldBarChartType:string = 'bar';
+  public oldBarChartLegend:boolean = false;
 
-  public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40]}
+  public oldBarChartData:any[] = [
+    {data: [43, 65, 59, 80, 81, 56, 55, 40]}
   ];
 
-  public barChartOptions:any = {
+  public newBarChartOptions:any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels:string[] = ['1', '2', '3', '4', '5', '6', '7'];
-  public barChartType:string = 'bar';
-  public barChartLegend:boolean = false;
+  public newBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
+  public newBarChartType:string = 'bar';
+  public newBarChartLegend:boolean = false;
 
-  public barChartData:any[] = [
-    {data: [65, 59, 80, 81, 56, 55, 40]}
+  public newBarChartData:any[] = [
+    {data: [70, 65, 59, 80, 81, 56, 55, 40]}
   ];
 
 //Doughnut Location

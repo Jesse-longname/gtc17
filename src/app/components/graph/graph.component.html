@@ -19,11 +19,11 @@
           <p align="center" class="black-50"> Pre-call</p>
           <div style="display: block">
             <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType"
+                    [datasets]="oldBarChartData"
+                    [labels]="oldBarChartLabels"
+                    [options]="oldBarChartOptions"
+                    [legend]="oldBarChartLegend"
+                    [chartType]="oldBarChartType"
                     (chartHover)="chartHovered($event)"
                     (chartClick)="chartClicked($event)"></canvas>
           </div>
@@ -32,11 +32,11 @@
             <p align="center" class="black-50"> Post-call</p>
             <div style="display: block">
               <canvas baseChart
-                      [datasets]="barChartData"
-                      [labels]="barChartLabels"
-                      [options]="barChartOptions"
-                      [legend]="barChartLegend"
-                      [chartType]="barChartType"
+                      [datasets]="newBarChartData"
+                      [labels]="newBarChartLabels"
+                      [options]="newBarChartOptions"
+                      [legend]="newBarChartLegend"
+                      [chartType]="newBarChartType"
                       (chartHover)="chartHovered($event)"
                       (chartClick)="chartClicked($event)"></canvas>
             </div>
