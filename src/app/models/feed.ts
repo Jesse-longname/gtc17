@@ -62,7 +62,7 @@ export const problemOptions = [
   "LGBTQ",
   "Sexting",
   "Bullying",
-  "Assult",
+  "Physical Abuse",
   "Family Troubles",
   "Other"
 ];

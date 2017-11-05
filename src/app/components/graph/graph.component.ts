@@ -18,6 +18,8 @@ export class GraphComponent implements OnInit {
     this.getAgeData();
     this.getLocationData();
     this.getGenderData();
+    this.getBeforeData();
+    this.getAfterData();
   }
 
   private getAgeData() {
@@ -65,18 +67,84 @@ export class GraphComponent implements OnInit {
     })
   }
 
+  private getBeforeData() {
+    this.db.collection('summary-stats').doc('before').valueChanges().subscribe((result) => {
+      this.oldBarChartData = [{data: []}];
+      for (let stat in result) {
+        this.oldBarChartData[0].data.push(result[stat]);
+      }
+    });
+  }
+  
+  private getAfterData() {
+    this.db.collection('summary-stats').doc('after').valueChanges().subscribe((result) => {
+      this.newBarChartData = [{data: []}];
+      for (let stat in result) {
+        this.newBarChartData[0].data.push(result[stat]);
+      }
+    });
+  }
+
   public chartColors: any[] = [
     {
       backgroundColor: ["#FFB6C1", "	#FFF68F", "#90EE90"]
     }];
 // Doughnut
-public oldRateChartLabels:string[] = ['0 - 3', '4 - 6', '7 - 10'];
-public oldRateChartData:number[] = [500, 250, 100];
-public oldRateChartType:string = 'doughnut';
+  public oldBarChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ],
+      yAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ]
+    }
+  };
+  public oldBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
+  public oldBarChartType:string = 'bar';
+  public oldBarChartLegend:boolean = false;
 
-public newRateChartLabels:string[] = ['0 - 3', '4 - 6', '7 - 10'];
-public newRateChartData:number[] = [300, 200, 600];
-public newRateChartType:string = 'doughnut';
+  public oldBarChartData:any[] = [
+    {data: [43, 65, 59, 80, 81, 56, 55, 40]}
+  ];
+
+  public newBarChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ],
+      yAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ]
+    }
+  };
+  public newBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
+  public newBarChartType:string = 'bar';
+  public newBarChartLegend:boolean = false;
+
+  public newBarChartData:any[] = [
+    {data: [70, 65, 59, 80, 81, 56, 55, 40]}
+  ];
 
 //Doughnut Location
 public locationChartLabels:string[] = ['Ontario', 'Quebec', 'British Columbia', 'Manitoba','Saskatchewan','Nunavut'];
