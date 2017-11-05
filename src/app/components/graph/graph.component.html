@@ -1,12 +1,14 @@
-<div class="flex flex-column outer">
-  <div class="flex">
-  </div>
+<div class="flex flex-column outer pb4 bb">
   <div>
-    <nav class="bt bb tc mw7 center mt4">
-      <a class="f6 f5-l link bg-animate black-80 hover-bg-lightest-blue dib pa3 ph4-l" (click)="changeSection(0)">Happiness Levels</a>
-      <a class="f6 f5-l link bg-animate black-80 hover-bg-light-green dib pa3 ph4-l" (click)="changeSection(1)">Location</a>
-      <a class="f6 f5-l link bg-animate black-80 hover-bg-light-blue dib pa3 ph4-l" (click)="changeSection(2)">Age Range</a>
-      <a class="f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l" (click)="changeSection(3)">Gender</a>
+    <nav class="flex bb tc mw7 center">
+      <a class="flex-auto flex items-center pointer justify-center f6 f5-l link bg-animate black-80 dib pa3 ph4-l hover-bg-lightest-blue"
+        (click)="changeSection(0)" [ngClass]="section === 0 ? 'bg-lightest-blue' : ''">Happiness Levels</a>
+      <a class="flex-auto flex items-center pointer justify-center f6 f5-l link bg-animate black-80 hover-bg-light-green dib pa3 ph4-l"
+        (click)="changeSection(1)" [ngClass]="section === 1 ? 'bg-light-green' : ''">Location</a>
+      <a class="flex-auto flex items-center pointer justify-center f6 f5-l link bg-animate black-80 hover-bg-light-blue dib pa3 ph4-l"
+        (click)="changeSection(2)" [ngClass]="section === 2 ? 'bg-light-blue' : ''">Age Range</a>
+      <a class="flex-auto flex items-center pointer justify-center f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l"
+        (click)="changeSection(3)" [ngClass]="section === 3 ? 'bg-light-pink' : ''">Gender</a>
       <!-- <a class="f6 f5-l link bg-animate black-80 hover-bg-light-yellow dib pa3 ph4-l" (click)="changeSection(4)">Feedback</a> -->
     </nav>
   </div>
@@ -14,14 +16,14 @@
 
   <div *ngIf="section == 0" class="flex graph-div">
     <div style="display: block" class="w-50">
-        <p align="center" class="black-50"> Pre-call</p>
-      <canvas baseChart [colors]="chartColors" [data]="oldRateChartData" [labels]="oldRateChartLabels" [chartType]="oldRateChartType" (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"></canvas>
+      <p align="center" class="black-50"> Pre-call</p>
+      <canvas baseChart [colors]="chartColors" [data]="oldRateChartData" [labels]="oldRateChartLabels" [chartType]="oldRateChartType"
+        (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
     <div style="display: block" class="w-50">
-        <p align="center" class="black-50"> Post-call</p>
-      <canvas baseChart [colors]="chartColors" [data]="newRateChartData" [labels]="newRateChartLabels" [chartType]="newRateChartType" (chartHover)="chartHovered($event)"
-        (chartClick)="chartClicked($event)"></canvas>
+      <p align="center" class="black-50"> Post-call</p>
+      <canvas baseChart [colors]="chartColors" [data]="newRateChartData" [labels]="newRateChartLabels" [chartType]="newRateChartType"
+        (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
     </div>
   </div>
 
@@ -33,21 +35,19 @@
     </div>
   </div>
 
-   <!-- AGE -->
-   <div *ngIf="section == 2" >
-      <div style="display: block">
-        <canvas baseChart [data]="ageChartData" [labels]="ageChartLabels" [chartType]="ageChartType" (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)"></canvas>
-      </div>
+  <!-- AGE -->
+  <div *ngIf="section == 2">
+    <div style="display: block">
+      <canvas baseChart [data]="ageChartData" [labels]="ageChartLabels" [chartType]="ageChartType" (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)"></canvas>
     </div>
+  </div>
 
   <!-- GENDER -->
-  <div *ngIf="section == 3" >
+  <div *ngIf="section == 3">
     <div style="display: block">
       <canvas baseChart [data]="genderChartData" [labels]="genderChartLabels" [chartType]="genderChartType" (chartHover)="chartHovered($event)"
         (chartClick)="chartClicked($event)"></canvas>
     </div>
   </div>
-
-  <div class="border-div"></div>
 </div>
