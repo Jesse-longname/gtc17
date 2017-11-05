@@ -17,7 +17,7 @@
   <div *ngIf="section == 0" class="flex graph-div">
       <div class = "w-50">
           <p align="center" class="black-50"> Pre-call Upset Level</p>
-          <div style="display: block">
+          <div style="display: block" class="indivCharts">
             <canvas baseChart
                     [datasets]="oldBarChartData"
                     [labels]="oldBarChartLabels"
@@ -28,9 +28,9 @@
                     (chartClick)="chartClicked($event)"></canvas>
           </div>
         </div>
-        <div class = "w-50">
+        <div class = "w-50 indivCharts">
             <p align="center" class="black-50"> Post-call Upset Level</p>
-            <div style="display: block">
+            <div style="display: block" class="indivCharts">
               <canvas baseChart
                       [datasets]="newBarChartData"
                       [labels]="newBarChartLabels"

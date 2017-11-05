@@ -103,6 +103,10 @@ export class GraphComponent implements OnInit {
       ],
       yAxes: [
         {
+          scaleLabel:{
+            display:true,
+            labelString: 'Percentage of Calls'
+          },
           gridLines: {
             display: false
           }
