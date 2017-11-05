@@ -22,7 +22,7 @@ stat_groups = [
 
 if __name__ == '__main__':
     file_loc = sys.argv[1]
-    db = firestore.Client("gift-the-code")
+    db = firestore.Client("kids-help-phone-dash")
     sheet1 = pandas.read_excel(file_loc, 0)
     names = sheet1[user_column_name]
     all_stats = []

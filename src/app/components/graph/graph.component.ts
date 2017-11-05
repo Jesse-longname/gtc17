@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CallService } from '../../services/call.service';
 
 @Component({
   selector: 'gtc-graph',
@@ -9,7 +10,10 @@ export class GraphComponent implements OnInit {
   state: string;
   section: number;
 
-  constructor() {
+  constructor(private callService: CallService) {
+    this.callService.getAgeBreakdown().subscribe(result => {
+      this.ageChartData = result;
+    });
     this.section = 0;
   }
 
@@ -40,8 +44,8 @@ public locationChartType:string = 'doughnut';
  public genderChartType:string = 'pie';
 
   // Pie
-  public ageChartLabels:string[] = ['0 - 5','6 - 10', '11 - 15','15 - 20'];
-  public ageChartData:number[] = [400, 500,300,150];
+  public ageChartLabels:string[] = ['0 - 5','6 - 10', '11 - 15','15 - 20', '21+'];
+  public ageChartData:number[] = [400, 500,300,150, 100];
   public ageChartType:string = 'pie';
 
   // events

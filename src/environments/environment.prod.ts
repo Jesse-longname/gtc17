@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyAffX4maeByto8Ye6bASi71DMQGjfkxwlE",
-    authDomain: "gift-the-code.firebaseapp.com",
-    databaseURL: "https://gift-the-code.firebaseio.com",
-    projectId: "gift-the-code",
-    storageBucket: "gift-the-code.appspot.com",
-    messagingSenderId: "991359982076"
+    apiKey: "AIzaSyAthymLfU7Zz6KnG44eT6tQcNzQHzQeNYE",
+    authDomain: "kids-help-phone-dash.firebaseapp.com",
+    databaseURL: "https://kids-help-phone-dash.firebaseio.com",
+    projectId: "kids-help-phone-dash",
+    storageBucket: "kids-help-phone-dash.appspot.com",
+    messagingSenderId: "385865084160"
   }
 };

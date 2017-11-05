@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CallService } from '../../services/call.service';
 
 @Component({
   selector: 'gtc-home',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private callService: CallService) { }
 
   ngOnInit() {
+    this.callService.getAgeBreakdown().subscribe(result => {
+      console.log(result);
+      
+    });
   }
 
 }
