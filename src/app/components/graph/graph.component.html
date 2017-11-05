@@ -9,6 +9,8 @@
         (click)="changeSection(2)" [ngClass]="section === 2 ? 'bg-light-blue' : ''">Age Range</a>
       <a class="flex-auto flex items-center pointer justify-center f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l"
         (click)="changeSection(3)" [ngClass]="section === 3 ? 'bg-light-pink' : ''">Gender</a>
+        <a class="flex-auto flex items-center pointer justify-center f6 f5-l link bg-animate black-80 hover-bg-light-pink dib pa3 ph4-l"
+        (click)="changeSection(4)" [ngClass]="section === 4 ? 'bg-light-pink' : ''">Net Promoter Score</a>
       <!-- <a class="f6 f5-l link bg-animate black-80 hover-bg-light-yellow dib pa3 ph4-l" (click)="changeSection(4)">Feedback</a> -->
     </nav>
   </div>
@@ -67,6 +69,24 @@
         (chartClick)="chartClicked($event)"></canvas>
     </div>
   </div>
+
+   <!-- NET PROMOTER SCORE -->
+   <div *ngIf="section == 4">
+      <div class = "w-100 tc">
+          <!-- <p align="center" class="black-100"> Net Promote</p> -->
+          <div style="display: block">
+            <canvas baseChart
+                    [datasets]="netBarChartData"
+                    [labels]="netBarChartLabels"
+                    [options]="netBarChartOptions"
+                    [colors]="netBarChartColors"
+                    [legend]="netBarChartLegend"
+                    [chartType]="netBarChartType"
+                    (chartHover)="netchartHovered($event)"
+                    (chartClick)="netchartClicked($event)"></canvas>
+          </div>
+        </div>
+    </div>
 
   <div class="border-div graph-div"></div>
 </div>
