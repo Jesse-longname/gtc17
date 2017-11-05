@@ -92,7 +92,23 @@ export class GraphComponent implements OnInit {
 // Doughnut
   public oldBarChartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ],
+      yAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ]
+    }
   };
   public oldBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
   public oldBarChartType:string = 'bar';
@@ -104,7 +120,23 @@ export class GraphComponent implements OnInit {
 
   public newBarChartOptions:any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ],
+      yAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ]
+    }
   };
   public newBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
   public newBarChartType:string = 'bar';
