@@ -1,23 +1,23 @@
 <div class="new-post flex flex-column bg-white shadow-2 br2">
   <div class="pa3 b bb b--light-gray">New Post</div>
   <div class="flex flex-column pa3">
-    <div class="flex">
+    <div class="flex pv1">
       <div class="w-40">What happened?</div>
-      <input class="flex-auto" [(ngModel)]="whatHappened" type="text">
+      <textarea [(ngModel)]="whatHappened" class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" aria-describedby="What Happened?"></textarea>
     </div>
-    <div class="flex">
+    <div class="flex pv1 items-center">
       <div class="w-40">How it went?</div>
-      <input class="flex-auto" [(ngModel)]="howItWent" type="text">
+      <select class="input-reset ba b--black-20 pa2 db w-100 bg-white" [(ngModel)]="howItWent">
+        <option *ngFor="let howItWent of howItWentOptions" [value]="howItWent">{{howItWent.label}}</option>
+      </select>
     </div>
-    <div class="flex">
-      <div class="w-40">Problem Category<div>
-        <select [(ngModel)]="whatWasTheProblem">
-          <option *ngFor="let c of categories" [value]="c.category">{{c.category}}</option>
-        </select>
-      <!-- <input class="flex-auto" [(ngModel)]="whatWasTheProblem" type="text"> -->
+    <div class="flex pv1 items-center">
+      <div class="w-40">Problem Type</div>
+      <select class="input-reset ba b--black-20 pa2 db w-100 bg-white" [(ngModel)]="whatWasTheProblem">
+        <option *ngFor="let problem of problemOptions" [value]="problem">{{problem}}</option>
+      </select>
     </div>
     <div class="flex pt2">
-      <button class="w-100 bn f6 link dim br1 ph3 pv2 dib white outline-0 bg-blue hover-bg-light-blue hover-blue" (click)="onAddPostClick()">Submit</button>
+      <button class="w-100 bn f5 b link dim br1 pv3 dib white outline-0 bg-blue hover-bg-light-blue hover-blue" (click)="onAddPostClick()">SUBMIT</button>
     </div>
   </div>
-</div>

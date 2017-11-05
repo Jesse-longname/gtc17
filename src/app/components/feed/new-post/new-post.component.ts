@@ -1,7 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { FeedItem } from '../../../models/feed';
 import { IUser, User } from '../../../models/user';
+import { problemOptions, howItWentOptions } from '../../../models/feed';
 import { Store } from '@ngrx/store';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'gtc-new-post',
@@ -10,20 +13,14 @@ import { Store } from '@ngrx/store';
 })
 export class NewPostComponent {
   @Output() onAddPost: EventEmitter<any> = new EventEmitter();
+  problemOptions = problemOptions;
+  howItWentOptions = howItWentOptions;
   user: IUser;
-  whatHappened: string;
-  howItWent: string;
-  whatWasTheProblem: string;
-  categories = [
-     {value: 1, category: "Emotional Health"},
-     {value: 2, category: "Dating"},
-     {value: 3, category: "LGBTQ"},
-     {value: 4, category: "Sexting"},
-     {value: 5, category: "Bullying"},
-     {value: 6, category: "Assult"},
-     {value: 7, category: "Family Troubles"},
-     {value: 8, category: "Other"}
-   ];
+
+  //Form Data
+  whatHappened: string = null;
+  howItWent: string = null;
+  whatWasTheProblem: string = null;
 
   constructor(private store: Store<any>) {
     this.store.select('user').subscribe(data => {
@@ -36,7 +33,11 @@ export class NewPostComponent {
       this.user,
       this.whatHappened,
       this.howItWent,
-      this.whatWasTheProblem
+      this.whatWasTheProblem,
+      moment(new Date()).format('ll'),
     ));
+    this.whatHappened = null;
+    this.howItWent = null;
+    this.whatWasTheProblem = null;
   }
 }

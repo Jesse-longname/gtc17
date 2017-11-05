@@ -30,6 +30,7 @@ export class FeedComponent implements OnInit {
 
   addNewItem(item: IFeedItem) {
     this.isNewPostVisible = false;
+    console.log(this.isNewPostVisible);
     this.store.dispatch({
       type: 'ADD_FEED_ITEM',
       payload: item
