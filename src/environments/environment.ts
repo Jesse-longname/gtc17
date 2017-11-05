@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyAffX4maeByto8Ye6bASi71DMQGjfkxwlE",
-    authDomain: "gift-the-code.firebaseapp.com",
-    databaseURL: "https://gift-the-code.firebaseio.com",
-    projectId: "gift-the-code",
-    storageBucket: "gift-the-code.appspot.com",
-    messagingSenderId: "991359982076"
+    apiKey: "AIzaSyB_GDrIz91Mp0ma8hVn8lNPdVHKqm7-WrY",
+    authDomain: "khp-dash.firebaseapp.com",
+    databaseURL: "https://khp-dash.firebaseio.com",
+    projectId: "khp-dash",
+    storageBucket: "khp-dash.appspot.com",
+    messagingSenderId: "861500616980"
   }
 };
