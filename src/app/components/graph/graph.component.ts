@@ -141,6 +141,10 @@ export class GraphComponent implements OnInit {
   public newBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7'];
   public newBarChartType:string = 'bar';
   public newBarChartLegend:boolean = false;
+  public newBarChartColors:any[] = [
+    {
+      backgroundColor: ["#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90"]
+    }];
 
   public newBarChartData:any[] = [
     {data: [70, 65, 59, 80, 81, 56, 55, 40]}

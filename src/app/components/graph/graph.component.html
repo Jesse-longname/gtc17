@@ -16,7 +16,7 @@
 
   <div *ngIf="section == 0" class="flex graph-div">
       <div class = "w-50">
-          <p align="center" class="black-50"> Pre-call</p>
+          <p align="center" class="black-50"> Pre-call Upset Level</p>
           <div style="display: block">
             <canvas baseChart
                     [datasets]="oldBarChartData"
@@ -29,12 +29,13 @@
           </div>
         </div>
         <div class = "w-50">
-            <p align="center" class="black-50"> Post-call</p>
+            <p align="center" class="black-50"> Post-call Upset Level</p>
             <div style="display: block">
               <canvas baseChart
                       [datasets]="newBarChartData"
                       [labels]="newBarChartLabels"
                       [options]="newBarChartOptions"
+                      [colors]="newBarChartColors"
                       [legend]="newBarChartLegend"
                       [chartType]="newBarChartType"
                       (chartHover)="chartHovered($event)"
