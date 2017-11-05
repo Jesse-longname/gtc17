@@ -1,11 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyAthymLfU7Zz6KnG44eT6tQcNzQHzQeNYE",
-    authDomain: "kids-help-phone-dash.firebaseapp.com",
-    databaseURL: "https://kids-help-phone-dash.firebaseio.com",
-    projectId: "kids-help-phone-dash",
-    storageBucket: "kids-help-phone-dash.appspot.com",
-    messagingSenderId: "385865084160"
+    apiKey: "AIzaSyB_GDrIz91Mp0ma8hVn8lNPdVHKqm7-WrY",
+    authDomain: "khp-dash.firebaseapp.com",
+    databaseURL: "https://khp-dash.firebaseio.com",
+    projectId: "khp-dash",
+    storageBucket: "khp-dash.appspot.com",
+    messagingSenderId: "861500616980"
   }
 };

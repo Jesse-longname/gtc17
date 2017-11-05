@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CallService } from '../../services/call.service';
+import { AngularFirestore } from 'angularfire2/firestore';
 
 @Component({
   selector: 'gtc-graph',
@@ -10,14 +10,59 @@ export class GraphComponent implements OnInit {
   state: string;
   section: number;
 
-  constructor(private callService: CallService) {
-    this.callService.getAgeBreakdown().subscribe(result => {
-      this.ageChartData = result;
-    });
+  constructor(private db: AngularFirestore) {
     this.section = 0;
   }
 
   ngOnInit() {
+    this.getAgeData();
+    this.getLocationData();
+    this.getGenderData();
+  }
+
+  private getAgeData() {
+    this.db.collection('summary-stats').doc('ages').valueChanges().subscribe((result) => {
+      this.ageChartData = [0,0,0,0,0];
+      for (let age in result) {
+        this.ageChartData[Math.floor((parseInt(age)-1)/5)] += result[age];
+      }
+    })
+  }
+
+  private getLocationData() {
+    this.db.collection('summary-stats').doc('locations').valueChanges().subscribe((result) => {
+      let to_sort = []
+      for (let province in result) {
+        to_sort.push([province,result[province]]);
+      }
+      let sorted = to_sort.sort((a,b) => {
+        return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0;
+      });
+      this.locationChartLabels = [];
+      this.locationChartData = [];
+      let total = 0;
+      for (let i = 0; i < sorted.length; i++) {
+        if (i < 5) {
+          this.locationChartLabels.push(sorted[i][0]);
+          this.locationChartData.push(sorted[i][1]);
+        } else {
+          total += sorted[i][1];
+        }
+      }
+      this.locationChartLabels.push('Other');
+      this.locationChartData.push(total);
+    })
+  }
+
+  private getGenderData() {
+    this.db.collection('summary-stats').doc('genders').valueChanges().subscribe((result) => {
+      this.genderChartData = [];
+      this.genderChartLabels = [];
+      for (let gender in result) {
+        this.genderChartLabels.push(gender);
+        this.genderChartData.push(result[gender]);
+      }
+    })
   }
 
   public chartColors: any[] = [

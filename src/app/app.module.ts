@@ -31,7 +31,6 @@ import { StatComponent } from './components/personal-stats/stat/stat.component';
 
 // Services
 import { StatService } from './services/stat.service';
-import { CallService } from './services/call.service';
 
 import { ChartsModule } from 'ng2-charts';
 import { FooterComponent } from './components/footer/footer.component';
@@ -84,7 +83,7 @@ const routes = [
       maxAge: 5
     }),
   ],
-  providers: [StatService, CallService],
+  providers: [StatService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
