@@ -69,18 +69,18 @@ export class GraphComponent implements OnInit {
 
   private getBeforeData() {
     this.db.collection('summary-stats').doc('before').valueChanges().subscribe((result) => {
-      this.oldBarChartData = [];
+      this.oldBarChartData = [{data: []}];
       for (let stat in result) {
-        this.oldBarChartData.push(result[stat]);
+        this.oldBarChartData[0].data.push(result[stat]);
       }
     });
   }
   
   private getAfterData() {
     this.db.collection('summary-stats').doc('after').valueChanges().subscribe((result) => {
-      this.newBarChartData = [];
+      this.newBarChartData = [{data: []}];
       for (let stat in result) {
-        this.newBarChartData.push(result[stat]);
+        this.newBarChartData[0].data.push(result[stat]);
       }
     });
   }
@@ -90,7 +90,7 @@ export class GraphComponent implements OnInit {
       backgroundColor: ["#FFB6C1", "	#FFF68F", "#90EE90"]
     }];
 // Doughnut
-  public barChartOptions:any = {
+  public oldBarChartOptions:any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
