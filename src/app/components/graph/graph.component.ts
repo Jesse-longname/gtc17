@@ -70,20 +70,36 @@ export class GraphComponent implements OnInit {
   private getBeforeData() {
     this.db.collection('summary-stats').doc('before').valueChanges().subscribe((result) => {
       this.oldBarChartData = [{data: []}];
+      let total = 0
       for (let stat in result) {
-        this.oldBarChartData[0].data.push(result[stat]);
+        total += result[stat];
       }
+      for (let stat in result) {
+        this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
+        this.oldBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
+      }
+      console.log(this.maxPercentage);
+      this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
   
   private getAfterData() {
     this.db.collection('summary-stats').doc('after').valueChanges().subscribe((result) => {
       this.newBarChartData = [{data: []}];
+      let total = 0
       for (let stat in result) {
-        this.newBarChartData[0].data.push(result[stat]);
+        total += result[stat];
       }
+      for (let stat in result) {
+        this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
+        this.newBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
+      }
+      console.log(this.maxPercentage);
+      this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
+
+  maxPercentage: number = 0;
 
   public chartColors: any[] = [
     {
@@ -109,6 +125,10 @@ export class GraphComponent implements OnInit {
           },
           gridLines: {
             display: false
+          },
+          ticks: {
+            min: 0,
+            max: 30
           }
         }
       ]
@@ -137,6 +157,10 @@ export class GraphComponent implements OnInit {
         {
           gridLines: {
             display: false
+          },
+          ticks: {
+            min: 0,
+            max: 30
           }
         }
       ]
