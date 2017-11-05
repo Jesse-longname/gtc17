@@ -35,8 +35,8 @@ public locationChartData:number[] = [500, 300, 400,60,80,60,150,90];
 public locationChartType:string = 'doughnut';
 
  // Pie
- public genderChartLabels:string[] = ['Female', 'Male'];
- public genderChartData:number[] = [500, 400];
+ public genderChartLabels:string[] = ['Female', 'Male', 'Transgender', 'Other'];
+ public genderChartData:number[] = [500, 400, 150, 100];
  public genderChartType:string = 'pie';
 
   // Pie
