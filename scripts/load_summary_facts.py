@@ -15,7 +15,8 @@ pre_column_names = [
 
 post_column_names = [
     "chatid",
-    "<strong>2.</strong> On a scale of 0 to 7, <strong>how upset are you</strong> right now?"
+    "<strong>2.</strong> On a scale of 0 to 7, <strong>how upset are you</strong> right now?",
+    "<strong>5.</strong> Would you recommend that others use this service (scale of 0 to 10)"
 ]
 
 if __name__ == '__main__':
@@ -45,6 +46,7 @@ if __name__ == '__main__':
     genders = {}
     before = {}
     after = {}
+    recommends = {}
     for i in range(len(the_datas[0])):
         call_id = the_datas[6][i]
 
@@ -74,11 +76,19 @@ if __name__ == '__main__':
             print('After rating is nan')
             continue
         after_rating = int(after_rating)
+
+        recommend_rating = post_datas[2][ind]
+        if str(recommend_rating) == 'nan':
+            print('Recommend rating is nan')
+            continue
+        recommend_rating = int(recommend_rating)
+
         province = the_datas[3][i]
 
         age = str(age)
         before_rating = str(before_rating)
         after_rating = str(after_rating)
+        recommend_rating = str(recommend_rating)
 
         if age in ages.keys():
             ages[age] = ages[age]+1
@@ -105,6 +115,10 @@ if __name__ == '__main__':
         else:
             after[after_rating] = 1
 
+        if recommend_rating in recommends.keys():
+            recommends[recommend_rating] = recommends[recommend_rating] + 1
+        else:
+            recommends[recommend_rating] = 1
         # data = {
         #     'date': the_datas[0][i],
         #     'gender': gender,
@@ -120,9 +134,11 @@ if __name__ == '__main__':
     print(locations)
     print(before)
     print(after)
+    print(recommends)
     db.collection(u'summary-stats').document('ages').set(ages)
     db.collection(u'summary-stats').document('genders').set(genders)
     db.collection(u'summary-stats').document('locations').set(locations)
     db.collection(u'summary-stats').document('before').set(before)
     db.collection(u'summary-stats').document('after').set(after)
+    db.collection(u'summary-stats').document('recommends').set(recommends)
     

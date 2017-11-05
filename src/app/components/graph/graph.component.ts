@@ -20,6 +20,7 @@ export class GraphComponent implements OnInit {
     this.getGenderData();
     this.getBeforeData();
     this.getAfterData();
+    this.getRecommendsData();
   }
 
   private getAgeData() {
@@ -99,6 +100,17 @@ export class GraphComponent implements OnInit {
     });
   }
 
+  private getRecommendsData() {
+    this.db.collection('summary-stats').doc('recommends').valueChanges().subscribe((result) => {
+      console.log(result);
+      this.netBarChartData = [{data: []}];
+      for (let stat in result) {
+        this.netBarChartData[0].data.push(result[stat]);
+      }
+      console.log(this.netBarChartData);
+    })
+  }
+
   maxPercentage: number = 0;
 
   public chartColors: any[] = [
@@ -176,6 +188,38 @@ export class GraphComponent implements OnInit {
 
   public newBarChartData:any[] = [
     {data: [70, 65, 59, 80, 81, 56, 55, 40]}
+  ];
+
+  public netBarChartOptions:any = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    scales: {
+      xAxes: [
+        {
+          gridLines: {
+            display: false
+          }
+        }
+      ],
+      yAxes: [
+        {
+          gridLines: {
+            display: false
+          },
+        }
+      ]
+    }
+  };
+  public netBarChartLabels:string[] = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  public netBarChartType:string = 'bar';
+  public netBarChartLegend:boolean = false;
+  public netBarChartColors:any[] = [
+    {
+      backgroundColor: ["#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90","#90EE90"]
+    }];
+
+  public netBarChartData:any[] = [
+    {data: [10, 10, 10, 70, 65, 59, 80, 81, 56, 55, 40]}
   ];
 
 //Doughnut Location
