@@ -6,12 +6,13 @@
   "apps": [
     {
       "root": "src",
-      "outDir": "dist",
+      "outDir": "../dist",
       "assets": [
         "assets",
         "favicon.ico",
         "manifest.json"
       ],
+      "deployUrl": "dist/",
       "index": "index.html",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
