@@ -5,7 +5,7 @@ static_folder = '../dist'
 template_folder = '../dist'
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////dev.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dev.db'
 db = SQLAlchemy(app)
 
 @app.route('/', defaults={'path': ''})
@@ -13,5 +13,5 @@ db = SQLAlchemy(app)
 def indexify(path):
     return render_template('index.html')
 
-from views import stats
+from server.views import stats
 app.register_blueprint(stats.stats, url_prefix='/api/stats/')

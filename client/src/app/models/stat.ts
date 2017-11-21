@@ -1,9 +1,10 @@
 import { autoserialize, autoserializeAs } from 'cerialize';
+import { StatGroup } from './stat-group';
 
 export class Stat {
     @autoserializeAs('eval_date') evalDate: Date;
     @autoserialize percent: number;
-    @autoserializeAs('stat_group') statGroup: string;
+    @autoserializeAs(StatGroup, 'stat_group') statGroup: string;
     @autoserialize user: string;
     @autoserialize max: number;
 }

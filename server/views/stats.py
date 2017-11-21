@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from server.models import stat_group, stat
 
 stats = Blueprint('stats', __name__)
 

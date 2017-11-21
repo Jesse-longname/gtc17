@@ -1,12 +1,13 @@
-from .. import db
-from . import stat_group, user
+from server.server import db
+from . import user, stat_group
 
 class Stat(db.Model):
+    __tablename__ = 'Stat'
     id = db.Column(db.Integer, primary_key=True)
     eval_date = db.Column(db.DateTime, nullable=False)
     percent = db.Column(db.Float, nullable=False)
-    stat_group_id = db.Column(db.Integer, ForeignKey('StatGroup.id'))
-    user_id = db.Column(db.Integer, ForeignKey('User.id'))
+    stat_group_id = db.Column(db.Integer, db.ForeignKey('StatGroup.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
     max_val = db.Column(db.Integer, nullable=False) # Needed?
 
     stat_group = db.relationship('StatGroup')
