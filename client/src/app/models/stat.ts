@@ -4,7 +4,7 @@ import { StatGroup } from './stat-group';
 export class Stat {
     @autoserializeAs('eval_date') evalDate: Date;
     @autoserialize percent: number;
-    @autoserializeAs(StatGroup, 'stat_group') statGroup: string;
+    @autoserializeAs(StatGroup, 'stat_group') statGroup: StatGroup;
     @autoserialize user: string;
-    @autoserialize max: number;
+    @autoserializeAs('max_val') max: number;
 }

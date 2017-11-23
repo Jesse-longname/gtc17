@@ -79,7 +79,6 @@ export class GraphComponent implements OnInit {
         this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
         this.oldBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
       }
-      console.log(this.maxPercentage);
       this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
@@ -95,19 +94,16 @@ export class GraphComponent implements OnInit {
         this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
         this.newBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
       }
-      console.log(this.maxPercentage);
       this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
 
   private getRecommendsData() {
     this.db.collection('summary-stats').doc('recommends').valueChanges().subscribe((result) => {
-      console.log(result);
       this.netBarChartData = [{data: []}];
       for (let stat in result) {
         this.netBarChartData[0].data.push(result[stat]);
       }
-      console.log(this.netBarChartData);
     })
   }
 
