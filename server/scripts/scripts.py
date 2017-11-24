@@ -6,6 +6,9 @@ from server.server import db
 from server.models.stat import Stat
 from server.models.stat_group import StatGroup
 from server.models.user import User
+from server.models.summary_stat import SummaryStat
+from server.models.summary_stat_entry import SummaryStatEntry
+import click
 
 """
 The file is provided through the first command line argument
@@ -70,7 +73,25 @@ stat_summary_columns = [
     "CallDateAndTimeStart"
 ]
 
+
+pre_column_names = [
+    "Form inserted",
+    "* Are you?",
+    "* How old are you?",
+    "* What Province are you contacting us from?",
+    "On a scale of 0 to 7, <strong>how upset are you right now</strong> right now?",
+    "siteLanguage",
+    "chat id"
+]
+
+post_column_names = [
+    "chatid",
+    "<strong>2.</strong> On a scale of 0 to 7, <strong>how upset are you</strong> right now?",
+    "<strong>5.</strong> Would you recommend that others use this service (scale of 0 to 10)"
+]
+
 def load_data(file_loc):
+    click.echo("Loading Data")
     # file_loc = sys.argv[1]
     sheet1 = pandas.read_excel(file_loc, 0)
     names = sheet1[user_column_name]
@@ -114,15 +135,148 @@ def load_data(file_loc):
         stat.user_id = user.id
         db.session.add(stat)
         db.session.commit()
+    click.echo("Finished Loading Data")
 
 def create_stat_groups():
+    click.echo("Create Stat Grouops")
     for i in range(len(stat_groups)):
         stat_group = StatGroup()
         stat_group.id = i+1
         stat_group.name = stat_groups[i]
         db.session.add(stat_group)
     db.session.commit()
+    click.echo("Finished Creating Stat Groups")
+
+def create_summary_stats():
+    click.echo("Creating Summary Stats")
+    summary_stats = ['age', 'gender', 'locations', 'before', 'after', 'recommends']
+    for i in range(len(summary_stats)):
+        summary_stat = SummaryStat()
+        summary_stat.id = i + 1
+        summary_stat.name = summary_stats[i]
+        db.session.add(summary_stat)
+    db.session.commit()
+    click.echo("Finished Creating Summary Stats")
 
 def create_db():
+    click.echo("Creating Database")
     db.create_all()
     create_stat_groups()
+    create_summary_stats()
+    click.echo("Finished Creating Database")
+
+def load_summary_stats(pre_file_loc, pre_sheet_num, post_file_loc, post_sheet_num):
+    """ Loads and compiles call data into a very simple form """
+    """ This method is very ugly, sorry :/ """
+    # Get the proper excel file and sheet
+    pre_sheet = pandas.read_excel(pre_file_loc, int(pre_sheet_num))
+    post_sheet = pandas.read_excel(post_file_loc, int(post_sheet_num))
+    
+    # Get the desired columns in the Pre-call sheet
+    pre_data = []
+    for pre_name in pre_column_names:
+        pre_data.append(pre_sheet[pre_name])
+    
+    # Get the desired columns in the Post-call sheet
+    post_data = []
+    for post_name in post_column_names:
+        post_data.append(post_sheet[post_name])
+
+    # Set up the dictionaries to store the values
+    ages = {}
+    locations = {}
+    genders = {}
+    before = {}
+    after = {}
+    recommends = {}
+
+    # Go through each row of the pre-call data
+    for i in range(len(pre_data[0])):
+        # Gather the data from the sheets
+        call_id = pre_data[6][i]
+
+        gender = pre_data[1][i]
+        if gender == 'I identify differently than the above':
+            gener = 'Other'
+        
+        age = str(pre_data[2][i]).split(' ')[0]
+        if age == 'Over':
+            age = '21'
+        age = age
+
+        ind = post_data[0][post_data[0] == call_id]
+        if ind.size == 0:
+            print('No after call log for: ' + str(call_id))
+            continue
+        ind = ind.index[0]
+        print(ind)
+
+        before_rating = str(pre_data[4][i])
+        if before_rating == 'nan':
+            print('Before rating is nan')
+            continue
+
+        after_rating = str(post_data[2][ind])
+        if after_rating == 'nan':
+            print('After rating is nan')
+            continue
+
+        recommend_rating = str(post_data[2][ind])
+        if recommend_rating == 'nan':
+            print('Recommend rating is nan')
+            continue
+        
+        province = pre_data[3][i]
+
+        # Store the data in the dictionaries
+        if age in ages.keys():
+            ages[age] = ages[age] + 1
+        else:
+            ages[age] = 1
+
+        if gender in genders.keys():
+            genders[gender] = genders[gender] + 1
+        else:
+            genders[gender] = 1
+        
+        if province in locations.keys():
+            locations[province] = locations[province] + 1
+        else:
+            locations[province] = 1
+
+        if before_rating in before.keys():
+            before[before_rating] = before[before_rating] + 1
+        else:
+            before[before_rating] = 1
+            
+        if after_rating in after.keys():
+            after[after_rating] = after[after_rating] + 1
+        else:
+            after[after_rating] = 1
+
+        if recommend_rating in recommends.keys():
+            recommends[recommend_rating] = recommends[recommend_rating] + 1
+        else:
+            recommends[recommend_rating] = 1
+    print(ages)
+    print(genders)
+    print(locations)
+    print(before)
+    print(after)
+    print(recommends)
+
+    create_entries(1, ages)
+    create_entries(2, genders)
+    create_entries(3, locations)
+    create_entries(4, before)
+    create_entries(5, after)
+    create_entries(6, recommends)
+
+def create_entries(summary_stat_id, values):
+    for key, value in values.items():
+        stat_entry = SummaryStatEntry()
+        stat_entry.stat_id = summary_stat_id
+        stat_entry.key = key
+        stat_entry.value = value
+        db.session.add(stat_entry)
+    db.session.commit()

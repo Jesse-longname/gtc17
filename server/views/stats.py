@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from server.server import gen_response
 from server.models.user import User
 from server.models.stat import Stat
-from server.models.stat_group import StatGroup
+from server.models.summary_stat import SummaryStat
 
 stats = Blueprint('stats', __name__)
 
@@ -21,4 +21,8 @@ def get_user_stats(username=""):
     print(stat_list)
     return gen_response('Retrieved User Stats for ' + username, stat_list)
 
-
+@stats.route('/summary')
+def get_all_summary_stats():
+    query = SummaryStat.query.all()
+    summary_stat_list = [summary_stat.serialize for summary_stat in query]
+    return gen_response('Retrieved all Summary Stats', summary_stat_list)

@@ -28,25 +28,31 @@ from server.scripts import scripts
 @app.cli.command()
 @click.argument('file_loc')
 def load_data(file_loc):
-    click.echo("Loading data...")
+    """ Loads the Quality Review Data from the given file """
     scripts.load_data(file_loc)
-    click.echo("Finished loading data...")
-
-@app.cli.command()
-def create_stat_groups():
-    click.echo("Creating Stat Groups")
-    scripts.create_stat_groups()
-    click.echo("Finished Creating Stat Groups")
 
 @app.cli.command()
 def create_db():
-    click.echo('Creating db')
+    """ Create the database and some preliminary data """
     scripts.create_db()
-    click.echo('Finished Created db')
+
+@app.cli.command()
+@click.argument('pre_call_file_loc')
+@click.argument('pre_call_sheet_num')
+@click.argument('post_call_file_loc')
+@click.argument('post_call_sheet_num')
+def load_summary_stats(
+        pre_call_file_loc, pre_call_sheet_num, post_call_file_loc, post_call_sheet_num):
+    """ Loads Summary Stats for the given sheets. Sheets should be call data """
+    scripts.load_summary_stats(
+        pre_call_file_loc,
+        pre_call_sheet_num,
+        post_call_file_loc,
+        post_call_sheet_num)
 
 @app.cli.command()
 def list_routes():
-    import urllib
+    """ Lists the routes available """
     output = []
     for rule in app.url_map.iter_rules():
 
@@ -58,7 +64,7 @@ def list_routes():
         url = url_for(rule.endpoint, **options)
         line = "{:50s} {:20s} {}".format(rule.endpoint, methods, url)
         output.append(line)
-    
+
     for line in sorted(output):
         print(line)
 
