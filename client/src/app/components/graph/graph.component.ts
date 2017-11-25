@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { SummaryStat } from '../../models/summary-stat';
+import { SummaryStatEntry } from '../../models/summary-stat-entry';
+import { StatService } from '../../services/stat.service';
 
 @Component({
   selector: 'gtc-graph',
@@ -10,7 +12,7 @@ export class GraphComponent implements OnInit {
   state: string;
   section: number;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private statService: StatService) {
     this.section = 0;
   }
 
@@ -24,87 +26,86 @@ export class GraphComponent implements OnInit {
   }
 
   private getAgeData() {
-    this.db.collection('summary-stats').doc('ages').valueChanges().subscribe((result) => {
+    this.statService.getSummaryStat('age').subscribe(result => {
       this.ageChartData = [0,0,0,0,0];
-      for (let age in result) {
-        this.ageChartData[Math.floor((parseInt(age)-1)/5)] += result[age];
-      }
-    })
+      result.entries.forEach((age) => {
+        this.ageChartData[Math.floor((parseInt(age.key)-1)/5)] += parseInt(age.value);
+      });
+    });
   }
 
   private getLocationData() {
-    this.db.collection('summary-stats').doc('locations').valueChanges().subscribe((result) => {
-      let to_sort = []
-      for (let province in result) {
-        to_sort.push([province,result[province]]);
-      }
-      let sorted = to_sort.sort((a,b) => {
-        return a[1] < b[1] ? 1 : a[1] > b[1] ? -1 : 0;
+    this.statService.getSummaryStat('locations').subscribe(result => {
+      result.entries.sort((a,b) => {
+        return parseInt(a.value) < parseInt(b.value) ? 1 : parseInt(a.value) > parseInt(b.value) ? -1 : 0;
       });
       this.locationChartLabels = [];
       this.locationChartData = [];
       let total = 0;
-      for (let i = 0; i < sorted.length; i++) {
+      for (let i = 0; i < result.entries.length; i++) {
         if (i < 5) {
-          this.locationChartLabels.push(sorted[i][0]);
-          this.locationChartData.push(sorted[i][1]);
+          this.locationChartLabels.push(result.entries[i].key);
+          this.locationChartData.push(parseInt(result.entries[i].value));
         } else {
-          total += sorted[i][1];
+          total += parseInt(result.entries[i].value);
         }
       }
       this.locationChartLabels.push('Other');
       this.locationChartData.push(total);
-    })
+    });
   }
 
   private getGenderData() {
-    this.db.collection('summary-stats').doc('genders').valueChanges().subscribe((result) => {
+    this.statService.getSummaryStat('gender').subscribe(result => {
       this.genderChartData = [];
       this.genderChartLabels = [];
-      for (let gender in result) {
-        this.genderChartLabels.push(gender);
-        this.genderChartData.push(result[gender]);
-      }
-    })
+      result.entries.forEach(gender => {
+        this.genderChartLabels.push(gender.key);
+        this.genderChartData.push(parseInt(gender.value));
+      });
+    });
   }
 
   private getBeforeData() {
-    this.db.collection('summary-stats').doc('before').valueChanges().subscribe((result) => {
+    this.statService.getSummaryStat('before').subscribe(result => {
       this.oldBarChartData = [{data: []}];
-      let total = 0
-      for (let stat in result) {
-        total += result[stat];
-      }
-      for (let stat in result) {
-        this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
-        this.oldBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
-      }
+      let total = 0;
+      result.entries.forEach(stat => {
+        total += parseInt(stat.value);
+      });
+      result.entries.forEach(stat => {
+        this.maxPercentage = Math.max(this.maxPercentage, ((parseInt(stat.value)/total)*100));
+        this.oldBarChartData[0].data.push(((parseInt(stat.value)/total)*100).toFixed(2));
+      });
       this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
   
   private getAfterData() {
-    this.db.collection('summary-stats').doc('after').valueChanges().subscribe((result) => {
+    this.statService.getSummaryStat('after').subscribe(result => {
       this.newBarChartData = [{data: []}];
-      let total = 0
-      for (let stat in result) {
-        total += result[stat];
-      }
-      for (let stat in result) {
-        this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
-        this.newBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
-      }
+      let total = 0;
+      result.entries.forEach(stat => {
+        total += parseInt(stat.value);
+      });
+      result.entries.forEach(stat => {
+        this.maxPercentage = Math.max(this.maxPercentage, ((parseInt(stat.value)/total)*100));
+        this.newBarChartData[0].data.push(((parseInt(stat.value)/total)*100).toFixed(2));
+      });
       this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
 
   private getRecommendsData() {
-    this.db.collection('summary-stats').doc('recommends').valueChanges().subscribe((result) => {
+    this.statService.getSummaryStat('recommends').subscribe(result => {
       this.netBarChartData = [{data: []}];
-      for (let stat in result) {
-        this.netBarChartData[0].data.push(result[stat]);
-      }
-    })
+      result.entries.sort((a,b) => {
+        return parseInt(a.key) < parseInt(b.key) ? -1 : parseInt(a.key) > parseInt(b.key) ? 1 : 0;
+      });
+      result.entries.forEach(stat => {
+        this.netBarChartData[0].data.push(parseInt(stat.value));
+      })
+    });
   }
 
   maxPercentage: number = 0;

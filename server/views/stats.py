@@ -26,3 +26,10 @@ def get_all_summary_stats():
     query = SummaryStat.query.all()
     summary_stat_list = [summary_stat.serialize for summary_stat in query]
     return gen_response('Retrieved all Summary Stats', summary_stat_list)
+
+@stats.route('/summary/<string:name>')
+def get_summary_stat(name):
+    summary_stat = SummaryStat.query.filter_by(name=name).first()
+    if summary_stat is None:
+        return gen_response('No Summary Stat with specified name', name, 400, True)
+    return gen_response('Retrieved Summary Stat with name ' + name, summary_stat.serialize)

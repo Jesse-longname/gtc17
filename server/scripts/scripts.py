@@ -216,7 +216,7 @@ def load_summary_stats(pre_file_loc, pre_sheet_num, post_file_loc, post_sheet_nu
             print('Before rating is nan')
             continue
 
-        after_rating = str(post_data[2][ind])
+        after_rating = str(post_data[1][ind])
         if after_rating == 'nan':
             print('After rating is nan')
             continue

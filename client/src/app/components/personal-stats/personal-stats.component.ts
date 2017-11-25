@@ -10,9 +10,7 @@ import { StatChange } from '../../models/stat-change';
 export class PersonalStatsComponent implements OnInit {
   statChanges: StatChange[] = [];
 
-  constructor(private statService: StatService) { 
-    
-  }
+  constructor(private statService: StatService) { }
 
   ngOnInit() {
     let randomUser = 'User ' + Math.floor((Math.random() * 40) + 1);
@@ -30,7 +28,6 @@ export class PersonalStatsComponent implements OnInit {
       let currTot = 0;
       let currCount = -1;
       let last = 0;
-      console.log(sorted);
       for (let i = 0; i < sorted.length; i++) {
         if (sorted[i].statGroup.id != currentGroupId) {
           if (currentGroup.name == 'Total') {
