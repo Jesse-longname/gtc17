@@ -79,7 +79,6 @@ export class GraphComponent implements OnInit {
         this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
         this.oldBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
       }
-      console.log(this.maxPercentage);
       this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
@@ -95,19 +94,16 @@ export class GraphComponent implements OnInit {
         this.maxPercentage = Math.max(this.maxPercentage, ((result[stat]/total)*100));
         this.newBarChartData[0].data.push(((result[stat]/total)*100).toFixed(2));
       }
-      console.log(this.maxPercentage);
       this.maxPercentage = Math.floor(this.maxPercentage * 1.1);
     });
   }
 
   private getRecommendsData() {
     this.db.collection('summary-stats').doc('recommends').valueChanges().subscribe((result) => {
-      console.log(result);
       this.netBarChartData = [{data: []}];
       for (let stat in result) {
         this.netBarChartData[0].data.push(result[stat]);
       }
-      console.log(this.netBarChartData);
     })
   }
 
@@ -236,19 +232,5 @@ public locationChartType:string = 'doughnut';
   public ageChartLabels:string[] = ['0 - 5','6 - 10', '11 - 15','15 - 20', '21+'];
   public ageChartData:number[] = [400, 500,300,150, 100];
   public ageChartType:string = 'pie';
-
-  // events
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public changeSection(x: number) {
-    this.section = x;
-    console.log(x);
-  }
-
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
 
 }
