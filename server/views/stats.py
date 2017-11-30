@@ -18,7 +18,6 @@ def get_user_stats(username=""):
     if not query:
         return gen_response('No results for User: ' + username, username, 400, True)
     stat_list = [stat.serialize for stat in query]
-    print(stat_list)
     return gen_response('Retrieved User Stats for ' + username, stat_list)
 
 @stats.route('/summary')

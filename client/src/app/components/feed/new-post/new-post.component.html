@@ -3,18 +3,18 @@
   <div class="flex flex-column pa3">
     <div class="flex pv1">
       <div class="w-40">What happened?</div>
-      <textarea [(ngModel)]="whatHappened" class="mySize db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" aria-describedby="What Happened?"></textarea>
+      <textarea [(ngModel)]="post.content" class="mySize db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" aria-describedby="What Happened?"></textarea>
     </div>
     <div class="flex pv1 items-center">
       <div class="w-40">How it went?</div>
-      <select class="input-reset ba b--black-20 pa2 db w-100 bg-white" [(ngModel)]="howItWent">
-        <option *ngFor="let howItWent of howItWentOptions" [value]="howItWent">{{howItWent.label}}</option>
+      <select class="input-reset ba b--black-20 pa2 db w-100 bg-white" [(ngModel)]="post.outcome">
+        <option *ngFor="let outcome of callOutcomes" [ngValue]="outcome">{{outcome.name}}</option>
       </select>
     </div>
     <div class="flex pv1 items-center">
       <div class="w-40">Problem Type</div>
-      <select class="input-reset ba b--black-20 pa2 db w-100 bg-white" [(ngModel)]="whatWasTheProblem">
-        <option *ngFor="let problem of problemOptions" [value]="problem">{{problem}}</option>
+      <select class="input-reset ba b--black-20 pa2 db w-100 bg-white" [(ngModel)]="post.category">
+        <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>
       </select>
     </div>
     <div class="flex pt2">

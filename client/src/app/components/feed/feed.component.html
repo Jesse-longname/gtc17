@@ -9,7 +9,7 @@
   <gtc-modal [showNewPost]="isNewPostVisible" (onNewPostHide)="hideNewPost()">
     <gtc-new-post (onAddPost)="addNewItem($event)"></gtc-new-post>
   </gtc-modal>
-  <div *ngFor="let feedItem of feedList">
-    <gtc-feed-item [data]="feedItem"></gtc-feed-item>
+  <div *ngFor="let post of posts">
+    <gtc-post-item [post]="post"></gtc-post-item>
   </div>
 </div>

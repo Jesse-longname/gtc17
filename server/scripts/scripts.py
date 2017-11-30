@@ -8,6 +8,9 @@ from server.models.stat_group import StatGroup
 from server.models.user import User
 from server.models.summary_stat import SummaryStat
 from server.models.summary_stat_entry import SummaryStatEntry
+from server.models.call_outcome import CallOutcome
+from server.models.post_category import PostCategory
+from server.models.post import Post
 import click
 
 """
@@ -105,6 +108,7 @@ def load_data(file_loc):
             user = User()
             user.first_name = 'John'
             user.last_name = 'Doe'
+            user.employee_id = i
             user.username = names[i]
             db.session.add(user)
             db.session.commit()
@@ -163,6 +167,8 @@ def create_db():
     db.create_all()
     create_stat_groups()
     create_summary_stats()
+    create_call_outcomes()
+    create_post_categories()
     click.echo("Finished Creating Database")
 
 def load_summary_stats(pre_file_loc, pre_sheet_num, post_file_loc, post_sheet_num):
@@ -279,4 +285,50 @@ def create_entries(summary_stat_id, values):
         stat_entry.key = key
         stat_entry.value = value
         db.session.add(stat_entry)
+    db.session.commit()
+
+def create_call_outcomes():
+    names = ['Good', 'Neutral', 'Not Well']
+    icons = ['sentiment_very_satisfied', 'sentiment_neutral', 'sentiment_very_dissatisfied']
+    for i in range(len(names)):
+        call_outcome = CallOutcome()
+        call_outcome.name = names[i]
+        call_outcome.icon_name = icons[i]
+        db.session.add(call_outcome)
+    db.session.commit()
+
+def create_post_categories():
+    categories = [
+        'Emotional Health',
+        'Dating',
+        'LGBTQ',
+        'Sexting',
+        'Bullying',
+        'Physical Abuse',
+        'Family Troubles',
+        'Other'
+    ]
+    for category in categories:
+        cat = PostCategory()
+        cat.name = category
+        db.session.add(cat)
+    db.session.commit()
+
+def add_sample_data():
+    names = ['asdf1', 'asdf2', 'asdf3']
+    ids = [209152, 208963, 157644]
+    texts = ['Sample text1', 'Sample text2', 'Sample text3']
+    for i in range(3):
+        user = User()
+        user.username = names[i]
+        user.first_name = names[i]
+        user.last_name = names[i]
+        user.employee_id = ids[i]
+        post = Post()
+        post.category_id = 1
+        post.content = texts[i]
+        post.outcome_id = 1
+        post.user = user
+        db.session.add(user)
+        db.session.add(post)
     db.session.commit()

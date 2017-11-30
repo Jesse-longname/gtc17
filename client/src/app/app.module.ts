@@ -29,14 +29,15 @@ import { FeedComponent } from './components/feed/feed.component';
 import { NewPostComponent } from './components/feed/new-post/new-post.component';
 import { FeedItemComponent } from './components/feed/feed-item/feed-item.component';
 import { StatComponent } from './components/personal-stats/stat/stat.component';
-
-// Services
-import { StatService } from './services/stat.service';
-
 import { ChartsModule } from 'ng2-charts';
 import { FooterComponent } from './components/footer/footer.component';
 import { ModalComponent } from './components/common/modal/modal.component';
+import { PostItemComponent } from './components/feed/post-item/post-item.component';
 
+// Services
+import { StatService } from './services/stat.service';
+import { PostService } from './services/post.service';
+import { DataService } from './services/data.service';
 
 export function logger(reducer: ActionReducer<any>): any {
   return storeLogger()(reducer);
@@ -47,7 +48,8 @@ export const metaReducers = !environment.production ? [logger] : [];
 const routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'stats', component: StatComponent }
+  { path: 'stats', component: StatComponent },
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({
@@ -61,7 +63,8 @@ const routes = [
     FeedItemComponent,
     StatComponent,
     FooterComponent,
-    ModalComponent
+    ModalComponent,
+    PostItemComponent
   ],
   imports: [
     ChartsModule,
@@ -85,7 +88,7 @@ const routes = [
       maxAge: 5
     }),
   ],
-  providers: [StatService],
+  providers: [StatService, PostService, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

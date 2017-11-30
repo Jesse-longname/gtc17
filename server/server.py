@@ -1,5 +1,6 @@
-from flask import Flask, render_template, jsonify, url_for
+from flask import Flask, render_template, jsonify, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, login_user, current_user
 import click
 
 static_folder = '../dist'
@@ -7,13 +8,18 @@ template_folder = '../dist'
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dev.db'
-app.config['SERVER_NAME'] = 'localhost:4200'
-db = SQLAlchemy(app)
+app.config['SERVER_NAME'] = 'localhost:4300'
+app.config['SECRET_KEY'] = 'ouoo9u1ibehqwd'
+app.config['SERVER'] = 'Local'
+app.config['USERNAME'] = 'CORP\\209152'
 
-@app.route('/', defaults={'path': ''})
+db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
 @app.route('/<path:path>')
 def indexify(path):
-    return render_template('index.html')
+    return redirect('/')
 
 def gen_response(message, data, code=200, modal=False):
     return jsonify({
@@ -68,5 +74,12 @@ def list_routes():
     for line in sorted(output):
         print(line)
 
-from server.views import stats
+@app.cli.command()
+def add_sample_data():
+    scripts.add_sample_data()
+
+from server.views import main, stats, posts, data
+app.register_blueprint(main.main)
 app.register_blueprint(stats.stats, url_prefix='/api/stats')
+app.register_blueprint(posts.posts, url_prefix='/api/posts')
+app.register_blueprint(data.data, url_prefix='/api/data')

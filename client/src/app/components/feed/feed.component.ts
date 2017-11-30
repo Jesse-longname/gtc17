@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { IFeedItem } from '../../models/feed';
+import { Post } from '../../models/post';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'gtc-feed',
@@ -8,13 +8,14 @@ import { IFeedItem } from '../../models/feed';
   styleUrls: ['./feed.component.scss']
 })
 export class FeedComponent implements OnInit {
-  feedList: IFeedItem[] = [];
   isNewPostVisible: boolean = false;
+  posts: Post[] = [];
 
-  constructor(private store: Store<any>) {
-    this.store.select('feed').subscribe(data => {
-      this.feedList = data;
-    });
+  constructor(private postService: PostService) {
+  }
+  
+  ngOnInit() {
+    this.getPosts();
   }
 
   hideNewPost() {
@@ -25,17 +26,24 @@ export class FeedComponent implements OnInit {
     this.isNewPostVisible = true;
   }
 
-  ngOnInit() {
+  getPosts() {
+    this.postService.getAllPosts().subscribe(result => {
+      this.posts = result;
+    })
   }
 
-  addNewItem(item: IFeedItem) {
-    this.isNewPostVisible = false;
-    console.log(this.isNewPostVisible);
-    this.store.dispatch({
-      type: 'ADD_FEED_ITEM',
-      payload: item
+  likePost(post: Post) {
+    this.postService.likePost(post).subscribe(result => {
+      post = result;
     });
   }
 
+  addNewItem(post: Post) {
+    console.log(this.isNewPostVisible);
+    this.postService.addPost(post).subscribe(result => {
+      this.isNewPostVisible = false;
+      this.getPosts();
+    });
+  }
 
 }

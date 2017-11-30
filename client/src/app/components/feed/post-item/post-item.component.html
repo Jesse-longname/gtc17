@@ -1,0 +1,32 @@
+<div class="flex flex-column bg-white shadow-3 br2 mv2 customFont">
+  <div class="flex items-center justify-between pv1 bb b--light-gray" *ngIf="post.user.username !== null">
+    <div class="flex items-center">
+      <div class="user-icon br-pill mh2 ba b--white" [ngStyle]="{'background-image': 'url(https://randomuser.me/api/portraits/thumb/men/51.jpg)'}"></div>
+      <div class="flex flex-column">
+        <div class="ttc">{{post.user.firstName}} {{post.user.lastName}}</div>
+        <div class="f7 ttc gray">{{post.user.location}}</div>
+      </div>
+    </div>
+    <div class="topic">{{post.category.name}}
+    <i class="material-icons f6 icon">{{post.outcome.iconName}}</i>
+    </div>
+  </div>
+  <div class="flex flex-column pa2">
+    <div class="flex post">
+      <div>{{post.content}}</div>
+    </div>
+  </div>
+  <div class="flex justify-between bt b--light-gray">
+    <div class="flex f6 pa2 gray date">{{post.date}}</div>
+    <div class="flex">
+      <div (click)="post.likes = post.likes+1" class="flex items-center ph2 gray f6 bl br b--light-gray pointer">
+        <i class="material-icons f6">thumb_up</i>
+        <div class="pl2">{{post.likes.length}}</div>
+      </div>
+      <div class="flex items-center ph2 gray f6 pointer">
+        <i class="material-icons f6">chat_bubble</i>
+        <div class="pl2">{{post.children.length}}</div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,43 +1,36 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { FeedItem } from '../../../models/feed';
-import { IUser, User } from '../../../models/user';
-import { problemOptions, howItWentOptions } from '../../../models/feed';
-import { Store } from '@ngrx/store';
-import * as moment from 'moment';
-
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { DataService } from '../../../services/data.service';
+import { CallOutcome } from '../../../models/call-outcome';
+import { Category } from '../../../models/category';
+import { Post } from '../../../models/post';
 
 @Component({
   selector: 'gtc-new-post',
   templateUrl: './new-post.component.html',
   styleUrls: ['./new-post.component.scss']
 })
-export class NewPostComponent {
-  @Output() onAddPost: EventEmitter<any> = new EventEmitter();
-  problemOptions = problemOptions;
-  howItWentOptions = howItWentOptions;
-  user: IUser;
+export class NewPostComponent implements OnInit {
+  @Output() onAddPost: EventEmitter<Post> = new EventEmitter();
+
+  callOutcomes: CallOutcome[] = [];
+  categories: Category[] = [];
+  selectAnOutcome = new CallOutcome();
+  selectACategory = new Category();
 
   //Form Data
-  whatHappened: string = null;
-  howItWent: string = null;
-  whatWasTheProblem: string = null;
+  post: Post = new Post();
 
-  constructor(private store: Store<any>) {
-    this.store.select('user').subscribe(data => {
-      this.user = data;
-    });
+  constructor(private dataService: DataService) {
+  }
+
+  ngOnInit() {
+    this.dataService.getCallOutcomes().subscribe(result => this.callOutcomes = result);
+    this.dataService.getCategories().subscribe(result => this.categories = result);
   }
 
   onAddPostClick() {
-    this.onAddPost.emit(new FeedItem(
-      this.user,
-      this.whatHappened,
-      this.howItWent,
-      this.whatWasTheProblem,
-      moment(new Date()).format('ll'),
-    ));
-    this.whatHappened = null;
-    this.howItWent = null;
-    this.whatWasTheProblem = null;
+    console.log(this.categories);
+    this.onAddPost.emit(this.post);
+    this.post = new Post();
   }
 }
