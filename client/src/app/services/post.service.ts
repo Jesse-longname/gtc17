@@ -38,4 +38,13 @@ export class PostService {
         return Deserialize(result.data, Post);
       });
   }
+
+  createComment(parent: Post, comment: string): Observable<Post> {
+    let newPost = new Post();
+    newPost.category = parent.category;
+    newPost.content = comment;
+    newPost.outcome = parent.outcome;
+    newPost.parent = parent;
+    return this.addPost(newPost);
+  }
 }

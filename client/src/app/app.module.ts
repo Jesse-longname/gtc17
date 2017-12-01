@@ -38,6 +38,7 @@ import { PostItemComponent } from './components/feed/post-item/post-item.compone
 import { StatService } from './services/stat.service';
 import { PostService } from './services/post.service';
 import { DataService } from './services/data.service';
+import { ThreadComponent } from './components/feed/thread/thread.component';
 
 export function logger(reducer: ActionReducer<any>): any {
   return storeLogger()(reducer);
@@ -64,7 +65,8 @@ const routes = [
     StatComponent,
     FooterComponent,
     ModalComponent,
-    PostItemComponent
+    PostItemComponent,
+    ThreadComponent
   ],
   imports: [
     ChartsModule,

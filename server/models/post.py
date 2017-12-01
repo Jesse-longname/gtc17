@@ -21,7 +21,7 @@ class Post(db.Model):
     likes = db.relationship('Like')
 
     @property
-    def serialize(self, expand=True):
+    def serialize(self):
         return {
             'id': self.id,
             'date': self.date,
@@ -30,8 +30,39 @@ class Post(db.Model):
             'content': self.content,
             'category': self.category.serialize,
             'outcome': self.outcome.serialize,
-            'children': [child.serialize for child in self.children] if expand else {},
-            'parent': self.parent.serialize(expand=False) if self.parent_id is not None else {}
+            'children': self.serialize_children(),
+            'parent': self.serialize_parent()
+        }
+    
+
+    def serialize_children(self):
+        children_list = []
+        for child in self.children:
+            children_list.append({
+                'id': child.id,
+                'date': child.date,
+                'likes': [like.serialize for like in child.likes],
+                'user': child.user.serialize,
+                'content': child.content,
+                'category': child.category.serialize,
+                'outcome': child.outcome.serialize,
+                'children': child.serialize_children(),
+                'parent': child.serialize_parent()
+            })
+        return children_list
+
+    def serialize_parent(self):
+        if not self.parent_id:
+            return {}
+        return {
+            'id': self.parent_id,
+            'date': self.parent.date,
+            'likes': [like.serialize for like in self.parent.likes],
+            'user': self.parent.user.serialize,
+            'content': self.parent.content,
+            'category': self.parent.category.serialize,
+            'outcome': self.parent.outcome.serialize,
+            'parent': self.parent.serialize_parent()
         }
 
     def create_post(data):

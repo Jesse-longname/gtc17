@@ -6,10 +6,13 @@
       ADD POST
     </div>
   </div>
-  <gtc-modal [showNewPost]="isNewPostVisible" (onNewPostHide)="hideNewPost()">
+  <gtc-modal [visible]="isNewPostVisible" (onHide)="hideNewPost()">
     <gtc-new-post (onAddPost)="addNewItem($event)"></gtc-new-post>
   </gtc-modal>
+  <gtc-modal [visible]="isThreadVisible" (onHide)="hideThread()">
+    <gtc-thread [parent]="selectedPost" (onClose)="hideThread()"></gtc-thread>
+  </gtc-modal>
   <div *ngFor="let post of posts">
-    <gtc-post-item [post]="post"></gtc-post-item>
+    <gtc-post-item [post]="post" (onCommentClick)="openThread(post)"></gtc-post-item>
   </div>
 </div>

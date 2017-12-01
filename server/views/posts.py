@@ -9,7 +9,7 @@ posts = Blueprint('posts', __name__)
 
 @posts.route('/', methods=['GET'])
 def get_all_posts():
-    query = Post.query.order_by(desc(Post.date)).all()
+    query = Post.query.filter_by(parent_id=None).order_by(desc(Post.date)).all()
     post_list = [post.serialize for post in query]
     return gen_response('Retrieved Posts', post_list)
 

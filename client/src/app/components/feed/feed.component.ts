@@ -9,6 +9,8 @@ import { PostService } from '../../services/post.service';
 })
 export class FeedComponent implements OnInit {
   isNewPostVisible: boolean = false;
+  isThreadVisible: boolean = false;
+  selectedPost: Post;
   posts: Post[] = [];
 
   constructor(private postService: PostService) {
@@ -36,6 +38,15 @@ export class FeedComponent implements OnInit {
     this.postService.likePost(post).subscribe(result => {
       post = result;
     });
+  }
+
+  openThread(post: Post) {
+    this.selectedPost = post;
+    this.isThreadVisible = true;
+  }
+
+  hideThread() {
+    this.isThreadVisible = false;
   }
 
   addNewItem(post: Post) {

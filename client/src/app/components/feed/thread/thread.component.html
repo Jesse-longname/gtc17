@@ -1,0 +1,17 @@
+<div class="thread bg-white shadow-2 br2">
+  <div class="pa3 b bb b--light-gray">Thread</div>
+  <div *ngIf="parent" class="w-90 center">
+    <gtc-post-item [post]="parent"></gtc-post-item>
+    <p>Comments</p>
+    <div class="children br3 b--solid b--light-blue bw2 bg-light-blue overflow-y-scroll">
+      <div class="w-80 center">
+        <gtc-post-item *ngFor="let child of parent.children" [post]="child"></gtc-post-item>
+      </div>
+    </div>
+    <div class="w-80 center">
+      <p class="ma1 mt2">New Comment</p>
+      <textarea [(ngModel)]="commentText" class="comment-box-size w-100 mw-100 db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2"></textarea>
+      <button style="margin-left: 70%" class="w-30 bn f5 b link dim br1 pv2 mb1 dib white outline-0 bg-blue hover-bg-light-blue hover-blue" (click)="comment()">Post Comment</button>
+    </div>
+  </div>
+</div>

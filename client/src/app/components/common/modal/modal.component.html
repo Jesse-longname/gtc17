@@ -1,4 +1,4 @@
-<div *ngIf="showNewPost" class="aspect-ratio--object bg-black-50 flex items-center justify-center" (click)="closeNewPost()">
+<div *ngIf="visible" class="aspect-ratio--object bg-black-50 flex items-center justify-center fixed" (click)="closeNewPost()">
   <div (click)="stopProp($event)">
     <ng-content></ng-content>
   </div>

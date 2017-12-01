@@ -6,11 +6,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent {
-  @Input() showNewPost: boolean = false;
-  @Output() onNewPostHide: EventEmitter<any> = new EventEmitter();
+  @Input() visible: boolean = false;
+  @Output() onHide: EventEmitter<any> = new EventEmitter();
 
   closeNewPost() {
-    this.onNewPostHide.emit();
+    this.onHide.emit();
   }
 
   stopProp(event: Event) {
