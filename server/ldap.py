@@ -2,8 +2,8 @@ from ldap3 import Server, Connection, SIMPLE, SYNC, ALL, Reader, ObjectDef, SUBT
 from ldap3.core.exceptions import LDAPException
 import json
 
-server_host = 'domain.site.com'
-ldap_server_url = 'ldaps://' + server_host + ':636' # or 389 if only ldap://
+server_host = '10.0.10.2'
+ldap_server_url = 'ldap://' + server_host + ':389' # or 389 if only ldap://
 user = '' # User email
 password = '' # Password for the account
 
