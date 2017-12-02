@@ -1,4 +1,3 @@
-import pandas
 import sys
 import math
 import datetime
@@ -12,6 +11,7 @@ from server.models.call_outcome import CallOutcome
 from server.models.post_category import PostCategory
 from server.models.post import Post
 import click
+import xlrd
 
 """
 The file is provided through the first command line argument
@@ -95,44 +95,45 @@ post_column_names = [
 
 def load_data(file_loc):
     click.echo("Loading Data")
-    # file_loc = sys.argv[1]
-    sheet1 = pandas.read_excel(file_loc, 0)
-    names = sheet1[user_column_name]
-
-    all_stats = []
-    for stat_name in stat_summary_columns:
-        all_stats.append(sheet1[stat_name])
-    for i in range(len(all_stats[0])): # i represents the row of the sheet
-        user = User.query.filter_by(username=names[i]).first()
+    
+    col_map = {}
+    sheet = xlrd.open_workbook(file_loc).sheet_by_index(0)
+    for i in range(sheet.ncols):
+        if sheet.cell(0, i).value in stat_summary_columns or sheet.cell(0, i).value == user_column_name:
+            col_map[sheet.cell(0, i).value] = i
+    for i in range(1, sheet.nrows): # i represents the row of the sheet
+        user = User.query.filter_by(username = sheet.cell(i, col_map[user_column_name]).value).first()
         if not user:
             user = User()
             user.first_name = 'John'
             user.last_name = 'Doe'
             user.employee_id = i
-            user.username = names[i]
+            user.username = sheet.cell(i, col_map[user_column_name]).value
             db.session.add(user)
             db.session.commit()
-            user = User.query.filter_by(username = names[i]).first()
+            user = User.query.filter_by(username = sheet.cell(i, col_map[user_column_name]).value).first()
         for j in range(len(stat_summary_columns)-3): # j represents the column in the sheet
-            # all_stats[j][i] is the users value for the jth column
             stat = Stat()
             stat.max_val = -1
-            stat.percent = float(all_stats[j][i]/5)*100
+            if sheet.cell(i, col_map[stat_summary_columns[j]]).value == '':
+                stat.percent = -1
+            else:
+                stat.percent = float(sheet.cell(i, col_map[stat_summary_columns[j]]).value) / 5 * 100
             if math.isnan(stat.percent):
                 stat.percent = -1
-            stat.eval_date = all_stats[-1][i]
+            stat.eval_date = sheet.cell(i, sheet.ncols-1).value
             if type(stat.eval_date) is not datetime.datetime:
-                stat.eval_date = datetime.datetime(datetime.MINYEAR,1,1)
+                stat.eval_date = datetime.datetime(datetime.MINYEAR, 1, 1)
             stat.stat_group_id = j+1
             stat.user_id = user.id
             db.session.add(stat)
             db.session.commit()
         stat = Stat()
-        stat.max_val = int(all_stats[len(stat_summary_columns)-2][i])
-        stat.percent = float(all_stats[len(stat_summary_columns)-3][i] / all_stats[len(stat_summary_columns)-2][i]) * 100
+        stat.max_val = int(sheet.cell(i, col_map[stat_summary_columns[len(stat_summary_columns)-2]]).value)
+        stat.percent = float(sheet.cell(i, col_map[stat_summary_columns[len(stat_summary_columns)-3]]).value / sheet.cell(i, col_map[stat_summary_columns[len(stat_summary_columns)-2]]).value) * 100
         if math.isnan(stat.percent):
             stat.percent = -1
-        stat.eval_date = all_stats[-1][i]
+        stat.eval_date = sheet.cell(i, col_map[stat_summary_columns[-1]])
         if type(stat.eval_date) is not datetime.datetime:
             stat.eval_date = datetime.datetime(datetime.MINYEAR, 1, 1)
         stat.stat_group_id = len(stat_groups)
@@ -174,19 +175,36 @@ def create_db():
 def load_summary_stats(pre_file_loc, pre_sheet_num, post_file_loc, post_sheet_num):
     """ Loads and compiles call data into a very simple form """
     """ This method is very ugly, sorry :/ """
+
+    click.echo("Loading Data")
+
     # Get the proper excel file and sheet
-    pre_sheet = pandas.read_excel(pre_file_loc, int(pre_sheet_num))
-    post_sheet = pandas.read_excel(post_file_loc, int(post_sheet_num))
-    
+    pre_sheet = xlrd.open_workbook(pre_file_loc).sheet_by_index(int(pre_sheet_num))
+    post_sheet = xlrd.open_workbook(post_file_loc).sheet_by_index(int(post_sheet_num))
+
+    # Map column names to column indicies
+    pre_col_map = {}
+    post_col_map = {}
+    for i in range(pre_sheet.ncols):
+        if pre_sheet.cell(0, i).value in pre_column_names:
+            pre_col_map[pre_sheet.cell(0, i).value] = i
+    for i in range(post_sheet.ncols):
+        if post_sheet.cell(0, i).value in post_column_names:
+            post_col_map[post_sheet.cell(0, i).value] = i
+            
     # Get the desired columns in the Pre-call sheet
-    pre_data = []
-    for pre_name in pre_column_names:
-        pre_data.append(pre_sheet[pre_name])
-    
+    pre_data = [[] for _ in range(len(pre_column_names))]
+
+    for i in range(len(pre_column_names)):
+        for j in range(1, pre_sheet.nrows):
+            pre_data[i].append(pre_sheet.cell(j, pre_col_map[pre_column_names[i]]).value)
+            
     # Get the desired columns in the Post-call sheet
-    post_data = []
-    for post_name in post_column_names:
-        post_data.append(post_sheet[post_name])
+    post_data = [[] for _ in range(len(post_column_names))]
+
+    for i in range(len(post_column_names)):
+        for j in range(1, post_sheet.nrows):
+            post_data[i].append(post_sheet.cell(j, post_col_map[post_column_names[i]]).value)
 
     # Set up the dictionaries to store the values
     ages = {}
@@ -210,11 +228,14 @@ def load_summary_stats(pre_file_loc, pre_sheet_num, post_file_loc, post_sheet_nu
             age = '21'
         age = age
 
-        ind = post_data[0][post_data[0] == call_id]
-        if ind.size == 0:
+        ind = -1
+        for j in range(len(post_data[0])): # need to find associated post call survey
+            if post_data[0][j] == call_id:
+                ind = j
+                break
+        if ind == -1:
             print('No after call log for: ' + str(call_id))
             continue
-        ind = ind.index[0]
         print(ind)
 
         before_rating = str(pre_data[4][i])
