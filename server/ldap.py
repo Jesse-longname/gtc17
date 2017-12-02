@@ -18,7 +18,7 @@ def get_ldap_connection():
     except LDAPException as e:
         raise ValueError('Unable to retrieve information. Ensure service account is up to date.')
 
-# c = get_ldap_connection()
+c = get_ldap_connection()
 
 def get_user_info(employee_id):
     query = '(&(cn=' + str(employee_id) + ')(objectClass=user))'

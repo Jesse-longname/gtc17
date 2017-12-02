@@ -10,6 +10,7 @@ main = Blueprint('main', __name__)
 def get_remote_user():
     if app.config['SERVER'] == 'Local':
         return app.config['USERNAME']
+    print("request: " + request.environ.get('REMOTE_USER'))
     return request.environ.get('REMOTE_USER')
 
 def ldap_authorize(employee_id):
