@@ -38,6 +38,8 @@ import { PostItemComponent } from './components/feed/post-item/post-item.compone
 import { StatService } from './services/stat.service';
 import { PostService } from './services/post.service';
 import { DataService } from './services/data.service';
+import { UserService } from './services/user.service';
+
 import { ThreadComponent } from './components/feed/thread/thread.component';
 
 export function logger(reducer: ActionReducer<any>): any {
@@ -90,7 +92,7 @@ const routes = [
       maxAge: 5
     }),
   ],
-  providers: [StatService, PostService, DataService],
+  providers: [StatService, PostService, DataService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

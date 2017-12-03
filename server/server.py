@@ -7,11 +7,7 @@ static_folder = '../dist'
 template_folder = '../dist'
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///dev.db'
-app.config['SERVER_NAME'] = 'localhost:4300'
-app.config['SECRET_KEY'] = 'ouoo9u1ibehqwd'
-app.config['SERVER'] = 'Local'
-app.config['USERNAME'] = 'CORP\\209152'
+app.config.from_object('config.Config')
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -78,8 +74,9 @@ def list_routes():
 def add_sample_data():
     scripts.add_sample_data()
 
-from server.views import main, stats, posts, data
+from server.views import main, stats, posts, data, user
 app.register_blueprint(main.main)
 app.register_blueprint(stats.stats, url_prefix='/api/stats')
 app.register_blueprint(posts.posts, url_prefix='/api/posts')
 app.register_blueprint(data.data, url_prefix='/api/data')
+app.register_blueprint(user.user, url_prefix='/api/user')

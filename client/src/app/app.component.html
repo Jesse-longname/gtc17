@@ -9,7 +9,7 @@
     </div>
     <div class="flex items-center ttc ph4" *ngIf="user !== null">
       <div class="user-icon br-pill mr3 ba b--white" [ngStyle]="{'background-image': 'url(' + user.thumbnail + ')'}"></div>
-      <div>{{user.name.first}} {{user.name.last}}</div>
+      <div *ngIf="theUser != null">{{theUser.firstName}} {{theUser.lastName}}</div>
     </div>
   </div>
   <div class="body-container pa2 bg-near-white h-100">

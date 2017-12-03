@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IUser } from './models/user';
+import { User } from './models/user-new';
+import { Observable } from 'rxjs/Observable';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'gtc-root',
@@ -9,8 +12,15 @@ import { IUser } from './models/user';
 })
 export class AppComponent {
   user: IUser = null;
+  aUser: Observable<User> = null;
+  theUser: User = null;
 
-  constructor(private store: Store<any>) {
+  constructor(private store: Store<any>, private userService: UserService) {
+    this.aUser = userService.getUser();
+    this.userService.getUser().subscribe(result => {
+        console.log(result);
+        this.theUser = result;
+    })
     this.store.select('user').subscribe(data => {
       this.user = data;
     });

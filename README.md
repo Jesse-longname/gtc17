@@ -24,6 +24,17 @@ similar situations in the future.
 
 ### Building and running the project
 
+First, you will need a config.py file in the server folder. The config file should have the following fields:
+* SQLALCHEMY_DATABASE_URI
+* SECRET_KEY
+* ENVIRONMENT ('Local' or 'Server')
+* USERNAME (if ENVIRONMENT == 'Local')
+* LDAP\_SERVER_URL
+* LDAP_USERNAME
+* LDAP_PASSWORD
+
+Follow these steps to setup locally
+
 1. Clone the repo (`git clone https://github.com/Jesse-longname/gtc17.git`)
 2. Open two terminals (They will be regerred to as `One` and `Two`)
 3. In `One`, we will install client dependencies and start a watcher on the files to 

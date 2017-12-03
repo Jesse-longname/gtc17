@@ -107,7 +107,7 @@ def load_data(file_loc):
             user = User()
             user.first_name = 'John'
             user.last_name = 'Doe'
-            user.employee_id = i
+            # user.employee_id = i
             user.username = sheet.cell(i, col_map[user_column_name]).value
             db.session.add(user)
             db.session.commit()
@@ -344,7 +344,7 @@ def add_sample_data():
         user.username = names[i]
         user.first_name = names[i]
         user.last_name = names[i]
-        user.employee_id = ids[i]
+        #user.employee_id = ids[i]
         post = Post()
         post.category_id = 1
         post.content = texts[i]
