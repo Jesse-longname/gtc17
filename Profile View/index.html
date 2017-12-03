@@ -22,6 +22,12 @@
     <!-- Tachyons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.9.0/tachyons.min.css" integrity="sha256-6EocT7D+UyRPq5Khj7F+ETTOtff4NmFerAKPQGQ54Yo=" crossorigin="anonymous" />
 
+<<<<<<< HEAD
+=======
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+
+>>>>>>> badges
     <!-- BOOTSTRAP START-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" src_type="url"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -32,10 +38,13 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
 
+<<<<<<< HEAD
     <!-- BOOTSTRAP TOGGLE -->
     <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
     <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
+=======
+>>>>>>> badges
     <!-- CUSTOM MOBILE CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -54,55 +63,42 @@
   <div id="widthDiv">
     <a id="modalCloseBtn" href="" title="Close" class="modalClose">X</a>
     <form style="margin: 0 5% 0 5%" class="">
-      <div id="altInputBox">  <!-- Input Fields Start-->
+      <div id="inputFields">  <!-- Input Fields Start-->
         <div class="tc row">
           <div class="col-sm-12">
-            <h2 class="altLabel">EMPLOYEE NAME</h2>
-            <input id="name" disabled ondbclick="enableField(this.id)" class="registerInput tc"/>
-            <div id="nameError" class="hiddenError tc"></div>
+            <textarea id="name" placeholder="Emplpoyee Name" class="registerInput tc" rows="1" readonly="true" ondblclick="this.readOnly='';"></textarea>
           </div>
         </div> <!-- Full Name Row End-->
-        <div class="row">
-          <div class="col-sm-5">
-            <img src="/images/propic.png" />
+        <div class="tc row">
+          <div class="col-sm-12">
+            <a href="#"><img style="height: 150px;" onclick="revealMe()" src="images/propic.png" /></a>
           </div>
-          <div class="col-sm-2"></div>
-          <div class="col-sm-5">
+        </div>
+        <div class="tc row">
+          <div class="tc col-sm-12">
+            <input id="fileUp" class="hidden" style="margin-left: 25%" type="file">
+          </div>
+        </div>
+        <div class="tc row">
+          <div class="col-sm-12">
             <h2 class="altLabel">SHORT BIO</h2>
-            <input disabled id="bio" class="registerInput tc"/>
+            <textarea id="bio" data-autoresize rows="3" class="registerInput tc"></textarea>
           </div>
         </div> <!-- Email/Telephone Row End-->
-        <div class="row">
-          <div class="col-sm-5">
+        <div class="tc row">
+          <div class="col-sm-12">
             <h2 class="altLabel">LIFETIME ACHIEVEMENTS</h2>
-            <input id="altPassword" type="password" class="registerInput tc"/>
-            <div id="passError" class="hiddenError tc"></div>
-          </div>
-          <div class="col-sm-2"></div>
-          <div class="col-sm-5">
-            <h2 class="altLabel"></h2>
-            <input id="altPasswordConfirm" type="password" class="registerInput tc"/>
-            <div id="confirmError" class="hiddenError tc"></div>
+            <input id="achievements" class="registerInput tc"/>
           </div>
         </div> <!-- Pass/Confirm row End-->
       </div><!-- Input Fields End -->
-        <div class="row tc">
-          <div class="col-sm-12 tc">
-            <!-- Loading GIF -->
-            <img id="loadingCube" src="" />
-          </div>
-        </div>
         <div class="row">
-          <div class="col-sm-12 tc">
+          <div style="margin-top: 1.5vw;" class="col-sm-12 tc">
             <!-- Send information to back end, retreview errors, and display them if any-->
-            <button id="altSubmit" type="button" class="btn draw-border"></button>
+            <button id="save" type="button" onclick="saveForm()" class="btn draw-border">SAVE</button>
           </div>
         </div>
     </form>
   </div>
 </div>
 <!-- MODAL ENDS -->
-
-<script>
-  document.getElementById("myText").disabled = true;
-</script>
