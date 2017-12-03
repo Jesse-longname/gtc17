@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from flask_login import current_user
 from server.server import gen_response, db
 from server.models.post import Post
 from server.models.like import Like
@@ -20,7 +21,7 @@ def add_post():
         return gen_response('Invalid data', request.data, 400, True)
     
     # Replace with user stuff
-    post.user_id = 1
+    post.user = current_user
 
     db.session.add(post)
     db.session.commit()
