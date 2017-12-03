@@ -7,7 +7,7 @@ static_folder = '../dist'
 template_folder = '../dist'
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
-app.config.from_object('config.Config')
+app.config.from_object('server.config.Config')
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()

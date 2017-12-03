@@ -10,15 +10,12 @@ main = Blueprint('main', __name__)
 app.register_error_handler(500, lambda e: 'Error: \n' + jsonify(e))
 
 def get_remote_user():
-    return "DEVINTERNAL\\giftthecode"	
-    if app.config['SERVER'] == 'Local':
+    if app.config['ENVIRONMENT'] == 'Local':
         return "DEVINTERNAL\\giftthecode"
     return request.environ.get('REMOTE_USER')
 
 def ldap_authorize(employee_id):
     print("FIX LDAP AUTHORIZE")
-    # user = User.query.filter_by(employee_id=employee_id).first()
-    # return user
     user_info = ldap.get_user_info(employee_id)
     if not user_info:
         return None
@@ -29,7 +26,6 @@ def ldap_authorize(employee_id):
     return user
 
 def update_user_using_LDAP(user, user_info):
-    # user.employee_id = user_info['cn']
     user.first_name = user_info['givenName']
     if not user.first_name:
          user.first_name = 'Awesome'
@@ -49,6 +45,8 @@ def save_user(user):
 def index():
     try:
         user = json.dumps(current_user.serialize)
+        if not current_user.is_authenticated:
+            return redirect('/login')
         return render_template('index.html')
     except AttributeError:
         return redirect('/login')
@@ -64,18 +62,16 @@ def login():
         abort(403)
     user = ldap_authorize(id)
     if user:
-        user.authenticated = True
+        user.is_authenticated = True
+        login_user(user)
         db.session.add(user)
         db.session.commit()
-        login_user(user)
         return redirect(referrer)
     abort(403)
 
 @main.before_request
 def before_request():
-    print('hi')
     if current_user.is_authenticated:
-        print('hello')
         g.user = current_user
 
 @login_manager.unauthorized_handler
@@ -85,8 +81,7 @@ def unauthorized():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.filter_by(id=1).first()
-    # return User.query.filter_by(id=1).first()
+    return User.query.filter_by(username=user_id).first()
 
 @main.route('/logout', methods=['GET', 'POST'])
 def logout():

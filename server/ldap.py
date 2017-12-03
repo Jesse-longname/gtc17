@@ -1,7 +1,7 @@
 from ldap3 import Server, Connection, SIMPLE, SYNC, ALL, Reader, ObjectDef, SUBTREE
 from ldap3.core.exceptions import LDAPException
 import json
-from config import Config
+from server.config import Config
 
 server = Server(Config.LDAP_SERVER_URL, get_info=ALL) # Should ask what their ldap url is
 
@@ -14,9 +14,19 @@ def get_ldap_connection():
     except LDAPException as e:
         raise ValueError('Unable to retrieve information. Ensure service account is up to date.')
 
-c = get_ldap_connection()
+if Config.ENVIRONMENT != 'Local':
+    c = get_ldap_connection()
 
 def get_user_info(employee_id):
+    if Config.ENVIRONMENT == 'Local':
+        return {
+            'cn': 'Test CN',
+            'sn': 'Surname',
+            'givenName': 'Firstname',
+            'mail': 'test@test.test',
+            'uid': 'fsurname',
+            'description': 'adesc'
+        }
     query = '(&(userPrincipalName=' + str(employee_id) + '@kidshelp.ca)(objectClass=person))'
     attributes = ['cn', 'sn', 'givenName', 'mail', 'memberOf', 'uid', 'description'] # Emp ID, Surname, GivenName, email, groups
     if not c.bound:

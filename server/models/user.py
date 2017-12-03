@@ -25,5 +25,8 @@ class User(db.Model):
             'username': self.username,
             'first_name': self.first_name,
             'last_name': self.last_name,
-            'location': self.location
+            'location': self.location,
+            'is_authenticated': self.is_authenticated,
+            'is_active': self.is_active,
+            'is_anonymous': self.is_anonymous
         }
