@@ -7,13 +7,16 @@
   padding: 0vw 0 0vw 0.5vw;
   font-weight: 400;
 }
-#altInputBox{
+#inputFields{
   background-color: #f0eef0;
   padding: 2% 0% 2% 0%;
   border-radius: 30px;
   -webkit-box-shadow: 0px 0px 62px -9px rgba(0,0,0,0.58);
   -moz-box-shadow: 0px 0px 62px -9px rgba(0,0,0,0.58);
   box-shadow: 0px 0px 62px -9px rgba(0,0,0,0.58);
+}
+h2{
+  font-size: calc(1vw + 10px);
 }
 .BSrow{
   padding: 0.5vw 7% 0.5vw 7%;
@@ -197,28 +200,18 @@ width: 40%;
 margin-top: 0;
 padding-top: 0;
 }
-.hiddenError{
-display: none;
-color: #e70808;
-}
-.hiddenError{
-display: none;
-}
 .form-list .field input.input-text{
 width: 87%;
 }
-#loadingCube{
-z-index: 999;
-margin-top: 25px;
-display: none;
-padding: 0;
-}
-#SinaLogo{
-width: 45%;
-min-width: 15vw;
-}
 .registerInput{
 font-size: calc(12px + 0.7vw);
+width: 85%;
+}
+.registerInput:hover{
+  cursor: pointer;
+}
+.registerInput:focus{
+  border: solid green 2px;
 }
 .form-group{
 margin-bottom: 0;
@@ -226,17 +219,9 @@ margin-bottom: 0;
 .dropDownLabel{
 margin-bottom: 10px;
 }
-.altAsterik{
-font-weight: 900;
-color: #e51d30;
-display: inline;
+.hidden{
+  display: none;
 }
-.altErrorMessage{
-color: red;
-font-size: 1.5rem;
-padding: 0 50px 50px 50px;
-}
-
 /*PHONES & TABLETS*/
 @media only screen and (max-width: 1024px) {
 #SinaLogo{
@@ -251,7 +236,7 @@ padding: 0 50px 50px 50px;
 #widthDiv{
   width: 80%;
 }
-#altSubmit{
+#save{
   font-size: 14px;
   min-width: 100%;
 }
@@ -264,5 +249,5 @@ padding: 0 50px 50px 50px;
 }
 /*MODAL STYLES END*/
 #modal{
-pointer-events: auto;
+  pointer-events: auto;
 }
