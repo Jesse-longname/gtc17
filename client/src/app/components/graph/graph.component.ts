@@ -234,18 +234,4 @@ public locationChartType:string = 'doughnut';
   public ageChartData:number[] = [400, 500,300,150, 100];
   public ageChartType:string = 'pie';
 
-  // events
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public changeSection(x: number) {
-    this.section = x;
-    console.log(x);
-  }
-
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
-
 }

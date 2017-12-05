@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Post } from '../../models/post';
 import { PostService } from '../../services/post.service';
+import { ViewEncapsulation } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'gtc-feed',
@@ -12,6 +13,7 @@ export class FeedComponent implements OnInit {
   isThreadVisible: boolean = false;
   selectedPost: Post;
   posts: Post[] = [];
+  displayPosts: Post[] = [];
 
   constructor(private postService: PostService) {
   }
@@ -31,7 +33,32 @@ export class FeedComponent implements OnInit {
   getPosts() {
     this.postService.getAllPosts().subscribe(result => {
       this.posts = result;
+      this.showNextTen();
+      this.updateDisplayList();
     })
+  }
+
+  showNextTen() {
+    let index = this.displayPosts.length;
+    for (let i = index; i < index + 10; i++) {
+      if (this.posts[i]) {
+        this.displayPosts.push(this.posts[i]);
+      }
+    }
+  }
+
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      // you're at the bottom of the page
+      this.showNextTen();
+    }
+  }
+
+  updateDisplayList() {
+    if (this.posts[0] != this.displayPosts[0]) {
+      this.displayPosts.unshift(this.posts[0]);
+    }
   }
 
   likePost(post: Post) {
@@ -50,7 +77,6 @@ export class FeedComponent implements OnInit {
   }
 
   addNewItem(post: Post) {
-    console.log(this.isNewPostVisible);
     this.postService.addPost(post).subscribe(result => {
       this.isNewPostVisible = false;
       this.getPosts();
