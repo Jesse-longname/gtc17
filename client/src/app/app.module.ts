@@ -7,8 +7,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RouterModule } from '@angular/router';
 import { storeLogger } from 'ngrx-store-logger';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { FormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
@@ -79,8 +77,6 @@ const routes = [
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
     RouterModule.forRoot(routes),
     StoreModule.forRoot({
       config: configReducer,
