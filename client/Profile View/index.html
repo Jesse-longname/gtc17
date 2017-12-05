@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+
+    <title> Profile </title>
+
+    <!-- JQUERY -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
+
+    <!-- Custom JS -->
+    <script src="src.js"></script>
+
+    <!-- Tachyons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tachyons/4.9.0/tachyons.min.css" integrity="sha256-6EocT7D+UyRPq5Khj7F+ETTOtff4NmFerAKPQGQ54Yo=" crossorigin="anonymous" />
+
+<<<<<<< HEAD
+=======
+    <!-- Popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+
+>>>>>>> badges
+    <!-- BOOTSTRAP START-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" src_type="url"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <!-- BOOTSTRAP END-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans" rel="stylesheet">
+
+<<<<<<< HEAD
+    <!-- BOOTSTRAP TOGGLE -->
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+=======
+>>>>>>> badges
+    <!-- CUSTOM MOBILE CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- MODAL STARTS -->
+<div id="modal" class="modalDialog" style="opacity:1">
+  <!-- Logo & Sign In-->
+  <section style="padding: 1vw 0 0 0" class="row tc">
+    <div class="col-md-4 offset-md-4 col-sm-12">
+      <a id="" href=""><img id="" src="" style="width: 45%;min-width: 15vw;"></a>
+    </div>
+    <div class="col-md-2 offset-md-1 col-sm-12 tc">
+      <p style="font-size: 12px; padding-top: 2vw;"><a style="color:#9ec746; font-weight: 600;" href=""><bold></bold></a></p>
+    </div>
+  </section>
+  <div id="widthDiv">
+    <a id="modalCloseBtn" href="" title="Close" class="modalClose">X</a>
+    <form style="margin: 0 5% 0 5%" class="">
+      <div id="inputFields">  <!-- Input Fields Start-->
+        <div class="tc row">
+          <div class="col-sm-12">
+            <textarea id="name" placeholder="Emplpoyee Name" class="registerInput tc" rows="1" readonly="true" ondblclick="this.readOnly='';"></textarea>
+          </div>
+        </div> <!-- Full Name Row End-->
+        <div class="tc row">
+          <div class="col-sm-12">
+            <a href="#"><img style="height: 150px;" onclick="revealMe()" src="images/propic.png" /></a>
+          </div>
+        </div>
+        <div class="tc row">
+          <div class="tc col-sm-12">
+            <input id="fileUp" class="hidden" style="margin-left: 25%" type="file">
+          </div>
+        </div>
+        <div class="tc row">
+          <div class="col-sm-12">
+            <h2 class="altLabel">SHORT BIO</h2>
+            <textarea id="bio" data-autoresize rows="3" class="registerInput tc"></textarea>
+          </div>
+        </div> <!-- Email/Telephone Row End-->
+        <div class="tc row">
+          <div class="col-sm-12">
+            <h2 class="altLabel">LIFETIME ACHIEVEMENTS</h2>
+            <input id="achievements" class="registerInput tc"/>
+          </div>
+        </div> <!-- Pass/Confirm row End-->
+      </div><!-- Input Fields End -->
+        <div class="row">
+          <div style="margin-top: 1.5vw;" class="col-sm-12 tc">
+            <!-- Send information to back end, retreview errors, and display them if any-->
+            <button id="save" type="button" onclick="saveForm()" class="btn draw-border">SAVE</button>
+          </div>
+        </div>
+    </form>
+  </div>
+</div>
+<!-- MODAL ENDS -->
