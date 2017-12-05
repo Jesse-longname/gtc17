@@ -41,6 +41,7 @@ import { DataService } from './services/data.service';
 import { UserService } from './services/user.service';
 
 import { ThreadComponent } from './components/feed/thread/thread.component';
+import { BadgesComponent } from './components/badges/badges.component';
 
 export function logger(reducer: ActionReducer<any>): any {
   return storeLogger()(reducer);
@@ -68,7 +69,8 @@ const routes = [
     FooterComponent,
     ModalComponent,
     PostItemComponent,
-    ThreadComponent
+    ThreadComponent,
+    BadgesComponent
   ],
   imports: [
     ChartsModule,
