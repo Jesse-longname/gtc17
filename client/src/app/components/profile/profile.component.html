@@ -1,0 +1,54 @@
+<!-- MODAL STARTS -->
+<div id="modal" class="modalDialog" style="opacity:1">
+  <!-- Logo & Sign In-->
+  <section style="padding: 1vw 0 0 0" class="row tc">
+    <div class="col-md-4 offset-md-4 col-sm-12">
+      <a id="" href=""><img id="" src="" style="width: 45%;min-width: 15vw;"></a>
+    </div>
+    <div class="col-md-2 offset-md-1 col-sm-12 tc">
+      <p style="font-size: 12px; padding-top: 2vw;"><a style="color:#9ec746; font-weight: 600;" href=""></a></p>
+    </div>
+  </section>
+  <div id="widthDiv">
+    <form style="margin: 0 5% 0 5%; padding-top: 30px;" class="">
+      <div id="inputFields">  <!-- Input Fields Start-->
+        <div class="tc row">
+          <div class="col-sm-12">
+            <!-- <textarea id="name" placeholder="Emplpoyee Name" class="registerInput tc" rows="1" readonly="true" ondblclick="this.readOnly='';"></textarea> -->
+            <h1>{{ user?.firstName }} {{ user?.lastName }}</h1>
+          </div>
+        </div> <!-- Full Name Row End-->
+        <div class="tc row">
+          <div class="col-sm-12">
+            <a href="#"><img style="height: 150px;" onclick="revealMe()" src="images/propic.png" /></a>
+          </div>
+        </div>
+        <div class="tc row">
+          <div class="tc col-sm-12">
+            <input id="fileUp" class="hidden" style="margin-left: 25%" type="file">
+          </div>
+        </div>
+        <div class="tc row">
+          <div class="col-sm-12">
+            <h2 class="altLabel">SHORT BIO</h2>
+            <p *ngIf="!editable">{{ user?.bio }}</p>
+            <textarea *ngIf="user && editable" name="bio" id="bio" data-autoresize rows="3" class="registerInput tc" [(ngModel)]="user.bio"></textarea>
+          </div>
+        </div> <!-- Email/Telephone Row End-->
+        <div class="tc row">
+          <div class="col-sm-12">
+            <h2 class="altLabel">LIFETIME ACHIEVEMENTS</h2>
+            <input id="achievements" class="registerInput tc"/>
+          </div>
+        </div> <!-- Pass/Confirm row End-->
+      </div><!-- Input Fields End -->
+      <div class="row" *ngIf="editable">
+        <div style="margin-top: 1.5vw;" class="col-sm-12 tc">
+          <!-- Send information to back end, retreview errors, and display them if any-->
+          <button id="save" type="button" (click)="saveForm()" class="btn draw-border">SAVE</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- MODAL ENDS -->

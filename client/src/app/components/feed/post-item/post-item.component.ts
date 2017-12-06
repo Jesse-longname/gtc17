@@ -9,6 +9,7 @@ import { Post } from '../../../models/post';
 export class PostItemComponent implements OnInit {
   @Input() post: Post;
   @Output() onCommentClick = new EventEmitter<void>();
+  profileVisible = false;
 
   constructor() { }
 
@@ -17,5 +18,13 @@ export class PostItemComponent implements OnInit {
 
   comment() {
     this.onCommentClick.emit();
+  }
+
+  showProfile() {
+    this.profileVisible = true;
+  }
+
+  hideProfile() {
+    this.profileVisible = false;
   }
 }

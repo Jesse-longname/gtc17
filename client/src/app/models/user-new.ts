@@ -6,4 +6,6 @@ export class User {
     @autoserializeAs('first_name') firstName: string;
     @autoserializeAs('last_name') lastName: string;
     @autoserialize location: string;
+    @autoserialize bio: string;
+    @autoserialize image: string;
 }

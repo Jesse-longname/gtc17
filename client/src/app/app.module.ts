@@ -40,6 +40,7 @@ import { UserService } from './services/user.service';
 
 import { ThreadComponent } from './components/feed/thread/thread.component';
 import { BadgesComponent } from './components/badges/badges.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 export function logger(reducer: ActionReducer<any>): any {
   return storeLogger()(reducer);
@@ -68,7 +69,8 @@ const routes = [
     ModalComponent,
     PostItemComponent,
     ThreadComponent,
-    BadgesComponent
+    BadgesComponent,
+    ProfileComponent
   ],
   imports: [
     ChartsModule,
