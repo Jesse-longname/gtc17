@@ -14,7 +14,7 @@
   </div>
   <div class="body-container pa2 bg-near-white h-100">
     <gtc-modal [visible]="profileVisible" (onHide)="hideProfile()">
-      <gtc-profile [user]="theUser"></gtc-profile>
+      <gtc-profile [user]="theUser" [editable]="true"></gtc-profile>
     </gtc-modal>
     <router-outlet>
     </router-outlet>

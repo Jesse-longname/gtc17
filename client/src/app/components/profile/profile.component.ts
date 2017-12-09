@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
 })
 export class ProfileComponent implements OnInit {
   @Input() user: User;
-  @Input() editable = true;
+  @Input() editable = false;
 
   constructor(private userService: UserService) { }
 
