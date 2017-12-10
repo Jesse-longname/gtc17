@@ -1,20 +1,31 @@
-from flask import Flask, render_template, jsonify, url_for, redirect, request
+from flask import Flask, render_template, jsonify, url_for, redirect, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, current_user
+from werkzeug.utils import secure_filename
 import click
 
 static_folder = '../dist'
 template_folder = '../dist'
+upload_folder = 'files' # This needs to be relative to the root directory, or from where run.py is. Not sure why
+allowed_extensions = set(['png', 'jpg', 'jpeg', 'gif'])
 
 app = Flask(__name__, static_folder=static_folder, template_folder=template_folder)
 app.config.from_object('server.config.Config')
+app.config['UPLOAD_FOLDER'] = upload_folder
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# Taken from the flask docs
+def allowed_file(filename):
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
 @app.route('/<path:path>')
 def indexify(path):
+    if allowed_file(path):
+        return send_file('../' + path, mimetype='image/'+path.rsplit('.', 1)[1].lower())
     return redirect('/')
 
 def gen_response(message, data, code=200, modal=False):
