@@ -7,7 +7,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { RouterModule } from '@angular/router';
 import { storeLogger } from 'ngrx-store-logger';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { environment } from '../environments/environment';
 
@@ -76,6 +76,7 @@ const routes = [
     ChartsModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     HttpClientModule,
     BrowserAnimationsModule,

@@ -26,4 +26,10 @@ export class UserService {
       });
   }
 
+  editImage(data: any): Observable<User> {
+    return this.http.post<Response>(this.baseUrl + 'edit_image', data)
+      .map(result => {
+        return Deserialize(result.data, User);
+      })
+  }
 }

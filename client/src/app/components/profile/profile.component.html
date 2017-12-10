@@ -10,7 +10,7 @@
     </div>
   </section>
   <div id="widthDiv">
-    <form style="margin: 0 5% 0 5%; padding-top: 30px;" class="">
+    <div style="margin: 0 5% 0 5%; padding-top: 30px;" class="">
       <div id="inputFields">  <!-- Input Fields Start-->
         <div class="tc row">
           <div class="col-sm-12">
@@ -20,12 +20,16 @@
         </div> <!-- Full Name Row End-->
         <div class="tc row">
           <div class="col-sm-12">
-            <a href="#"><img style="height: 150px;" onclick="revealMe()" src="images/propic.png" /></a>
+            <img *ngIf="user" style="height: 150px;" [src]='user.imageURL' />
           </div>
         </div>
-        <div class="tc row">
+        <div class="tc row" *ngIf="editable">
           <div class="tc col-sm-12">
-            <input id="fileUp" class="hidden" style="margin-left: 25%" type="file">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+              <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput accept="image/*">
+              <button type="button" (click)="clearFile()">clear file</button>
+              <button type="submit" [disabled]="form.invalid">Submit</button>
+            </form>
           </div>
         </div>
         <div class="tc row">
@@ -48,7 +52,7 @@
           <button id="save" type="button" (click)="saveForm()" class="btn draw-border">SAVE</button>
         </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 <!-- MODAL ENDS -->

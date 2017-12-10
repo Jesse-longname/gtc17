@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify, request
 from flask_login import current_user
 from server.server import gen_response
-from server.server import db
+from server.server import db, allowed_file, app
+from werkzeug.utils import secure_filename
+import os
 
 user = Blueprint('user', __name__)
 
@@ -19,5 +21,23 @@ def edit_user():
     db.session.add(current_user)
     db.session.commit()
     return gen_response('Successfully edited profile!', current_user.serialize)
+
+@user.route('/edit_image', methods=['POST'])
+def upload_file():
+    if 'avatar' not in request.files:
+        return gen_response('No file part', request.data, 400, True)
+    file = request.files['avatar']
+    # if user does not select a file, browser also
+    # submits a empty part without filename
+    if file.filename == '':
+        return gen_response('No selected file', request.data, 400, True)
+    if file and allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        current_user.image_url = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        db.session.add(current_user)
+        db.session.commit()
+        return gen_response('Successfully edited image', current_user.serialize)
+    return gen_response('Something went wrong :(', request.data, 400, True)
 
     

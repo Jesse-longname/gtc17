@@ -1,4 +1,5 @@
-from server.server import db
+from server.server import db, app
+import os
 
 class User(db.Model):
     __tablename__ = 'User'
@@ -9,7 +10,7 @@ class User(db.Model):
     last_name = db.Column(db.Unicode(128), nullable=False)
     location = db.Column(db.String(256), default='Unknown')
     bio = db.Column(db.Unicode)
-    image = db.Column(db.String)
+    image_url = db.Column(db.String, nullable=False, default=os.path.join(app.config['UPLOAD_FOLDER'], 'default-user.png'))
 
     # Flask Login fields
     is_authenticated = db.Column(db.Boolean, default=False)
@@ -29,7 +30,7 @@ class User(db.Model):
             'last_name': self.last_name,
             'location': self.location,
             'bio': self.bio,
-            'image': self.image,
+            'image_url': self.image_url,
             'is_authenticated': self.is_authenticated,
             'is_active': self.is_active,
             'is_anonymous': self.is_anonymous

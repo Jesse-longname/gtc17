@@ -4,11 +4,11 @@
       <!-- <i class="material-icons pa2 pointer">menu</i> -->
       <div class="pl2 title flex items-center">
         <div class="pb1">Kids Help Phone: Counsellor Analytics</div>
-        <img class="icon pl2" src="../dist/assets/icons/kidsHelpPhone.png" alt="icon">
+        <img class="icon pl2" src="dist/assets/icons/kidsHelpPhone.png" alt="icon">
       </div>
     </div>
     <div (click)='showProfile()' class="flex items-center ttc ph4" *ngIf="user !== null">
-      <div class="user-icon br-pill mr3 ba b--white" [ngStyle]="{'background-image': 'url(' + user.thumbnail + ')'}"></div>
+      <img class="user-icon br-pill mr3 ba b--white" [src]="theUser?.imageURL"[ngStyle]="{'background-image': theUser?.imageURL}" />
       <div *ngIf="theUser != null">{{theUser.firstName}} {{theUser.lastName}}</div>
     </div>
   </div>

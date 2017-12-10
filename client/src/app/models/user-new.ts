@@ -7,5 +7,5 @@ export class User {
     @autoserializeAs('last_name') lastName: string;
     @autoserialize location: string;
     @autoserialize bio: string;
-    @autoserialize image: string;
+    @autoserializeAs('image_url') imageURL: string;
 }
